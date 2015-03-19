@@ -1,5 +1,5 @@
 class Promo < ActiveRecord::Base
-  validates :title, presence: false
+  validates :title, presence: true
   validates :description, presence: true
   validates :terms, presence: true
   validates :expiration_date, presence: true
