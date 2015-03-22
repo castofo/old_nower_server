@@ -4,12 +4,29 @@ class PromosController < ApplicationController
     render json: {
       promos: Promo.all
     },
-    except: [:created_at, :updated_at],
-    methods: [:current_redemptions],
+    only: [:promos, :id, :title, :expiration_date],
+    methods: [:available_redemptions],
     include: {
         branches: {
-          except: [:created_at, :updated_at]
+          only: [:id, :latitude, :longitude, :store_id]
         }
     }
+  end
+
+  def show
+    promo = Promo.find_by id: params[:id]
+    if promo
+      render json: {
+        promo: promo
+      },
+      except: [:created_at, :updated_at],
+      methods: [:available_redemptions]
+    else
+      render json: {
+        success: false,
+        errors: ["Unable to find the promo"]
+      },
+      status: 404
+    end
   end
 end

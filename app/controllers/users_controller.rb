@@ -26,7 +26,7 @@ class UsersController < ApplicationController
 
   def show
     render json: {
-      store: current_person
+      user: current_person
     },
     except: [:salt, :created_at, :updated_at, :password]
   end
