@@ -7,7 +7,6 @@ class PromosController < ApplicationController
     except: [:created_at, :updated_at],
     methods: [:current_redemptions],
     include: {
-
         branches: {
           except: [:created_at, :updated_at]
         }
