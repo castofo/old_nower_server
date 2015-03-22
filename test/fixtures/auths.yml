@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  token: MyString
+  user_id: 1
+  store_id: 1
+  lifetime: 2015-03-22 10:14:44
+
+two:
+  token: MyString
+  user_id: 1
+  store_id: 1
+  lifetime: 2015-03-22 10:14:44

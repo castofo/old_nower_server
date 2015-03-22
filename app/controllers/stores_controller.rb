@@ -1,25 +1,25 @@
-class UsersController < ApplicationController
+class StoresController < ApplicationController
   before_filter :authenticate!, only: [:show]
 
   def index
     render json: {
-      users: User.all
+      promos: Store.all
     },
     except: [:password, :salt, :created_at, :updated_at]
   end
 
   def create
-    user = User.new create_params
-    if user.save
+    @store = Store.new create_params
+    if @store.save
       render json: {
         success: true,
-        user: user
+        store: @store
       },
       except: [:password, :salt, :created_at, :updated_at]
     else
       render json: {
         success: false,
-        errors: user.errors
+        errors: @store.errors
       }
     end
   end
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
 
   private
   def create_params
-    params.require(:user).permit(:email, :name, :gender, :birthday,
-    :password, :password_confirmation)
+    params.require(:store).permit(:email, :name, :category, :main_phone,
+                                  :password, :password_confirmation)
   end
 end
