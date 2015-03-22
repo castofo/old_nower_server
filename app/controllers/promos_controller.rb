@@ -29,4 +29,26 @@ class PromosController < ApplicationController
       status: 404
     end
   end
+
+  def create
+    promo = Promo.new create_params
+    if promo.save
+      render json: {
+        success: true,
+        store: promo
+      },
+      except: [:password, :salt, :created_at, :updated_at]
+    else
+      render json: {
+        success: false,
+        errors: promo.errors
+      }
+    end
+  end
+
+  private
+  def create_params
+    params.require(:promo).permit(:title, :description, :terms,
+                                  :expiration_date, :people_limit)
+  end
 end
