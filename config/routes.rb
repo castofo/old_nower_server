@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'promos/:id', to: 'promos#show'
   get 'stores/:id', to: 'stores#show'
   get 'users/:id', to: 'users#show'
+  get 'redemptions/:code' => 'redemptions#show'
 
   post 'stores', to: 'stores#create'
   post 'users', to: 'users#create'
