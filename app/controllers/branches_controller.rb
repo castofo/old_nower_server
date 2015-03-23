@@ -1,0 +1,38 @@
+class BranchesController < ApplicationController
+
+  def create
+    branch = Branch.new create_params
+    if branch.name && branch.store_id
+      already = Branch.where name: branch.name, store_id: branch.store_id
+      if already.count != 0
+        render json: {
+          success: false,
+          errors: ["Branch already exists"],
+        }
+        return
+      end
+    end
+    if branch.save
+      render json: {
+        success: true,
+        branch: branch
+      },
+      except: [:created_at, :updated_at]
+    else
+      render json: {
+        success: false,
+        errors: branch.errors
+      }
+    end
+  end
+
+  private
+  def create_params
+    params.require("branch").permit("name",
+                                    "address",
+                                    "latitude",
+                                    "longitude",
+                                    "phone",
+                                    "store_id")
+  end
+end
