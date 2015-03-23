@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150322151444) do
+ActiveRecord::Schema.define(version: 20150323062108) do
 
   create_table "auths", force: :cascade do |t|
     t.string   "token"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20150322151444) do
   end
 
   add_index "branches_promos", ["branch_id"], name: "index_branches_promos_on_branch_id"
+  add_index "branches_promos", ["promo_id", "branch_id"], name: "index_branches_promos_on_promo_id_and_branch_id", unique: true
   add_index "branches_promos", ["promo_id"], name: "index_branches_promos_on_promo_id"
 
   create_table "promos", force: :cascade do |t|

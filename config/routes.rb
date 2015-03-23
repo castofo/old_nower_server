@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root 'users#index'
 
   get 'promos', to: 'promos#index'
+  get 'promos/locations', to: 'promos#get_by_locations'
   get 'stores', to: 'stores#index'
   get 'users', to: 'users#index'
 
