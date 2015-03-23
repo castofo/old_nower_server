@@ -1,5 +1,12 @@
 class BranchesController < ApplicationController
 
+  def index
+    render json: {
+      branches: Branch.all
+    },
+    except: [:created_at, :updated_at]
+  end
+
   def create
     branch = Branch.new create_params
     if branch.name && branch.store_id
