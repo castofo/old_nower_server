@@ -1,27 +1,38 @@
 class RedemptionsController < ApplicationController
 
-  def show
-    redemption = Redemption.find_by code: params[:code]
+  def redeem
+    redemption = Redemption.find_by redeem_params
     if redemption
       if !redemption.redeemed
         redemption.redeemed = true
-        redemption.save
-        render json: {
-          success: true,
-          message: 'Valid code'
-        }
+        if redemption.save
+          render json: {
+            success: true,
+            promo: redemption.promo
+          },
+          except: [:created_at, :updated_at]
+        else
+          render json: {
+            success: false,
+            errors: redemption.errors
+          }
+        end
       else
         render json: {
           success: false,
-          message: 'Code is already in use'
+          errors: ['The code was already redeemed']
         }
       end
     else
       render json: {
         success: false,
-        state: 'Code does not exist'
+        errors: ['The code is invalid']
       }
     end
   end
 
+  private
+  def redeem_params
+    params.require(:redemption).permit(:code)
+  end
 end
