@@ -18,6 +18,13 @@ class BranchesController < ApplicationController
         }
         return
       end
+      if !Store.find_by id: branch.store_id
+        render json: {
+          success: false,
+          errors: ["Invalid store"]
+        }
+        return
+      end
     end
     if branch.save
       render json: {
