@@ -46,6 +46,19 @@ class PromosController < ApplicationController
     end
   end
 
+  def get_by_locations
+    render json: {
+      locations: Branch.all
+    },
+    only: [:locations, :id, :latitude, :longitude, :store_id],
+    include: {
+      promos: {
+        only: [:promos, :id, :title, :expiration_date],
+        methods: [:available_redemptions]
+      }
+    }
+  end
+
   private
   def create_params
     params.require(:promo).permit(:title, :description, :terms,
