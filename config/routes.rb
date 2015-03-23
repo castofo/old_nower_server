@@ -11,11 +11,11 @@ Rails.application.routes.draw do
   get 'promos/:id', to: 'promos#show'
   get 'stores/:id', to: 'stores#show'
   get 'users/:id', to: 'users#show'
-  get 'redemptions/:code', to: 'redemptions#show'
 
   post 'stores', to: 'stores#create'
   post 'users', to: 'users#create'
   post 'promos', to: 'promos#create'
+  post 'redemptions/redeem', to: 'redemptions#redeem'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
