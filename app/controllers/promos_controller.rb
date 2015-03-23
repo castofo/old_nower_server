@@ -32,17 +32,31 @@ class PromosController < ApplicationController
 
   def create
     promo = Promo.new create_params
-    if promo.save
-      render json: {
-        success: true,
-        store: promo
-      },
-      except: [:password, :salt, :created_at, :updated_at]
-    else
+    arr = []
+    get_params_branches[:branches].each do | branch |
+      arr.push(branch["id"])
+    end
+    branches = Branch.where(id: arr)
+    if branches.count != arr.count
       render json: {
         success: false,
-        errors: promo.errors
+        errors: ["Some provided branches are invalid"]
       }
+    else
+      promo.branches = branches
+      if promo.save
+        render json: {
+          success: true,
+          promo: promo,
+          branches: promo.branches
+        },
+        except: [:created_at, :updated_at]
+      else
+        render json: {
+          success: false,
+          errors: promo.errors
+        }
+      end
     end
   end
 
@@ -63,5 +77,10 @@ class PromosController < ApplicationController
   def create_params
     params.require(:promo).permit(:title, :description, :terms,
                                   :expiration_date, :people_limit)
+  end
+
+  private
+  def get_params_branches
+    params.require(:promo).permit(branches: [:id])
   end
 end
