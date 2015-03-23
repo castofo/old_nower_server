@@ -3,7 +3,7 @@ class StoresController < ApplicationController
 
   def index
     render json: {
-      promos: Store.all
+      stores: Store.all
     },
     except: [:password, :salt, :created_at, :updated_at]
   end

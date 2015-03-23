@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   post 'stores', to: 'stores#create'
   post 'users', to: 'users#create'
   post 'promos', to: 'promos#create'
+  post 'branches', to: 'branches#create'
   post 'redemptions/redeem', to: 'redemptions#redeem'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
