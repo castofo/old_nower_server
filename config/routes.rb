@@ -22,6 +22,8 @@ Rails.application.routes.draw do
 
   post 'stores/login', to: 'stores#login'
   post 'users/login', to: 'users#login'
+
+  post 'promo/now', to: 'redemptions#generate_code'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
