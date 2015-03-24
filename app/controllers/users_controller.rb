@@ -31,9 +31,30 @@ class UsersController < ApplicationController
     except: [:salt, :created_at, :updated_at, :password]
   end
 
+  def login
+    email = login_params[:email]
+    passwd = login_params[:password]
+    user_type = login_params[:user_type]
+    user = Auth.authenticate email, passwd, user_type
+    if user
+      render json: {
+        user: user
+      },
+      only: [:user, :token, :user_id]
+    else
+      render json: {
+        errors: ["Login failed"]
+      }
+    end
+  end
+
   private
   def create_params
     params.require(:user).permit(:email, :name, :gender, :birthday,
     :password, :password_confirmation)
+  end
+
+  def login_params
+    params.require(:user).permit(:email, :password).merge(user_type: "user")
   end
 end
