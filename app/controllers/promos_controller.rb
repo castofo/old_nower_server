@@ -33,7 +33,7 @@ class PromosController < ApplicationController
   def create
     promo = Promo.new create_params
     arr = []
-    get_params_branches[:branches].each do | branch |
+    create_params_branches[:branches].each do | branch |
       arr.push(branch["id"])
     end
     branches = Branch.where(id: arr)
@@ -60,27 +60,13 @@ class PromosController < ApplicationController
     end
   end
 
-  def get_by_locations
-    render json: {
-      locations: Branch.all
-    },
-    only: [:locations, :id, :latitude, :longitude, :store_id],
-    include: {
-      promos: {
-        only: [:promos, :id, :title, :expiration_date],
-        methods: [:available_redemptions]
-      }
-    }
-  end
-
   private
   def create_params
     params.require(:promo).permit(:title, :description, :terms,
                                   :expiration_date, :people_limit)
   end
 
-  private
-  def get_params_branches
+  def create_params_branches
     params.require(:promo).permit(branches: [:id])
   end
 end
