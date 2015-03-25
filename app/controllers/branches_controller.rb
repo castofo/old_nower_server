@@ -40,6 +40,20 @@ class BranchesController < ApplicationController
     end
   end
 
+  def get_by_locations
+    render json: {
+      locations: Branch.all
+    },
+    only: [:locations, :id, :latitude, :longitude, :store_id],
+    methods: [:store_name],
+    include: {
+      promos: {
+        only: [:promos, :id, :title, :expiration_date],
+        methods: [:available_redemptions]
+      }
+    }
+  end
+
   private
   def create_params
     params.require("branch").permit("name",
