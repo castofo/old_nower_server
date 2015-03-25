@@ -29,9 +29,10 @@ class RedemptionsController < ApplicationController
       end while Redemption.exists? code: redemption.code
       if redemption.save
         render json: {
+          success: true,
           redemption: redemption
         },
-        only: [:redemption, :code, :promo_id, :user_id, :redeemed]
+        only: [:success, :redemption, :code, :promo_id, :user_id, :redeemed]
       else
         render json: {
           success: false,
