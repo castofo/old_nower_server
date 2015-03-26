@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'promos', to: 'promos#index'
   get 'promos/locations', to: 'branches#get_by_locations'
   get 'stores', to: 'stores#index'
+  get 'stores/branches/:id', to: 'stores#get_branches'
   get 'users', to: 'users#index'
   get 'branches', to: 'branches#index'
 
