@@ -60,6 +60,21 @@ class PromosController < ApplicationController
     end
   end
 
+  def fetch_promos
+    promo_ids = Set.new
+    fetch_promos_params[:promos].each do | promo |
+      promo_ids.add promo["id"]
+    end
+    promos = Promo.where id: promo_ids.to_a
+    if promos
+      render json: {
+        promos: promos
+      },
+      except: [:created_at, :updated_at],
+      methods: [:available_redemptions]
+    end
+  end
+
   private
   def create_params
     params.require(:promo).permit(:title, :description, :terms,
@@ -68,5 +83,9 @@ class PromosController < ApplicationController
 
   def create_params_branches
     params.require(:promo).permit(branches: [:id])
+  end
+
+  def fetch_promos_params
+    params.permit(promos: [:id])
   end
 end
