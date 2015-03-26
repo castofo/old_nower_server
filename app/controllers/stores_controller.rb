@@ -48,6 +48,20 @@ class StoresController < ApplicationController
     end
   end
 
+  def get_branches
+    store = Store.find_by id: params[:id]
+    if store
+      render json: {
+        branches: store.branches
+      },
+      except: [:created_at, :updated_at]
+    else
+      render json: {
+        errors: ["Invalid store"]
+      }
+    end
+  end
+
   private
   def create_params
     params.require(:store).permit(:email, :name, :category, :main_phone,
