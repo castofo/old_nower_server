@@ -44,7 +44,7 @@ class BranchesController < ApplicationController
     render json: {
       locations: Branch.all
     },
-    only: [:locations, :id, :latitude, :longitude, :store_id],
+    only: [:locations, :id, :latitude, :longitude, :store_id, :name],
     methods: [:store_name],
     include: {
       promos: {
