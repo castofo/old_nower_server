@@ -50,9 +50,10 @@ class RedemptionsController < ApplicationController
         if redemption.save
           render json: {
             success: true,
-            promo: redemption.promo
+            promo: redemption.promo,
+            user: redemption.user
           },
-          except: [:created_at, :updated_at]
+          except: [:created_at, :updated_at, :password, :salt]
         else
           render json: {
             success: false,
