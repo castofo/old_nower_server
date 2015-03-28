@@ -48,6 +48,20 @@ class UsersController < ApplicationController
     end
   end
 
+  def get_redemptions
+    user = User.find_by id: params[:id]
+    if user
+      render json: {
+        redemptions: user.redemptions
+      },
+      except: [:created_at, :updated_at]
+    else
+      render json: {
+        errors: ["Invalid user"]
+      }
+    end
+  end
+
   private
   def create_params
     params.require(:user).permit(:email, :name, :gender, :birthday,
