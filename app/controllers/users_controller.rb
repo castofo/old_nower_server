@@ -35,13 +35,15 @@ class UsersController < ApplicationController
     email = login_params[:email]
     passwd = login_params[:password]
     user_type = login_params[:user_type]
-    user = Auth.authenticate email, passwd, user_type
-    if user
+    auth = Auth.authenticate email, passwd, user_type
+    if auth
+      token = auth.token
       render json: {
         success: true,
-        user: user
+        user: auth.user,
+        token: token
       },
-      only: [:success, :user, :token, :user_id]
+      except: [:password, :salt, :created_at, :updated_at]
     else
       render json: {
         success: false,
