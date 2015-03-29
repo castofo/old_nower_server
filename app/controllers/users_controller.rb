@@ -35,15 +35,34 @@ class UsersController < ApplicationController
     email = login_params[:email]
     passwd = login_params[:password]
     user_type = login_params[:user_type]
-    user = Auth.authenticate email, passwd, user_type
-    if user
+    auth = Auth.authenticate email, passwd, user_type
+    if auth
+      token = auth.token
       render json: {
-        user: user
+        success: true,
+        user: auth.user,
+        token: token
       },
-      only: [:user, :token, :user_id]
+      except: [:password, :salt, :created_at, :updated_at]
     else
       render json: {
+        success: false,
         errors: ["Login failed"]
+      }
+    end
+  end
+
+  def get_redemptions
+    user = User.find_by id: params[:id]
+    if user
+      render json: {
+        redemptions: user.redemptions
+      },
+      except: [:created_at, :updated_at],
+      methods: [:store_name]
+    else
+      render json: {
+        errors: ["Invalid user"]
       }
     end
   end
