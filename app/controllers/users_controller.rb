@@ -54,7 +54,8 @@ class UsersController < ApplicationController
       render json: {
         redemptions: user.redemptions
       },
-      except: [:created_at, :updated_at]
+      except: [:created_at, :updated_at],
+      methods: [:store_name]
     else
       render json: {
         errors: ["Invalid user"]
