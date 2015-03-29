@@ -38,11 +38,13 @@ class UsersController < ApplicationController
     user = Auth.authenticate email, passwd, user_type
     if user
       render json: {
+        success: true,
         user: user
       },
-      only: [:user, :token, :user_id]
+      only: [:success, :user, :token, :user_id]
     else
       render json: {
+        success: false,
         errors: ["Login failed"]
       }
     end

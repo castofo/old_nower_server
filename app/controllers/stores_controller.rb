@@ -38,11 +38,13 @@ class StoresController < ApplicationController
     store = Auth.authenticate email, passwd, user_type
     if store
       render json: {
+        success: true,
         store: store
       },
-      only: [:store, :token, :store_id]
+      only: [:success, :store, :token, :store_id]
     else
       render json: {
+        success: false,
         errors: ["Login failed"]
       }
     end
