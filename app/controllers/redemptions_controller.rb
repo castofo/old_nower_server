@@ -53,6 +53,7 @@ class RedemptionsController < ApplicationController
             promo: redemption.promo,
             user: redemption.user
           },
+          methods: [:available_redemptions],
           except: [:created_at, :updated_at, :password, :salt]
         else
           render json: {
