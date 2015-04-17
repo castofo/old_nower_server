@@ -58,8 +58,14 @@ class UsersController < ApplicationController
       render json: {
         redemptions: user.redemptions
       },
-      except: [:created_at, :updated_at],
-      methods: [:store_name]
+      except: [:promo_id, :created_at, :updated_at],
+      methods: [:store_name],
+      include: {
+        promo: {
+          only: [:id, :title, :expiration_date],
+          methods: [:available_redemptions]
+        }
+      }
     else
       render json: {
         errors: ["Invalid user"]
