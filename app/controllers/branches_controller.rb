@@ -54,6 +54,21 @@ class BranchesController < ApplicationController
     }
   end
 
+  def get_by_locations_in_range
+    query = Branch.geolocation_query get_by_locations_in_range_params
+    render json: {
+      locations: Branch.find_by_sql(query)
+    },
+    only: [:locations, :id, :latitude, :longitude, :store_id, :name],
+    methods: [:store_name],
+    include: {
+      promos: {
+        only: [:promos, :id, :title, :expiration_date],
+        methods: [:available_redemptions]
+      }
+    }
+  end
+
   private
   def create_params
     params.require("branch").permit("name",
@@ -62,5 +77,9 @@ class BranchesController < ApplicationController
                                     "longitude",
                                     "phone",
                                     "store_id")
+  end
+
+  def get_by_locations_in_range_params
+    params.require("user_location").permit("latitude", "longitude")
   end
 end

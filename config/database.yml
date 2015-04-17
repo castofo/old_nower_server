@@ -10,8 +10,11 @@ default: &default
 
 development:
   <<: *default
-  adapter: sqlite3
-  database: db/development.sqlite3
+  adapter: mysql2
+  user: root
+  password:
+  host: localhost
+  database: nower_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
