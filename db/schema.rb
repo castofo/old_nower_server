@@ -14,73 +14,73 @@
 ActiveRecord::Schema.define(version: 20150323203753) do
 
   create_table "auths", force: :cascade do |t|
-    t.string   "token"
-    t.integer  "user_id"
-    t.integer  "store_id"
+    t.string   "token",      limit: 255
+    t.integer  "user_id",    limit: 4
+    t.integer  "store_id",   limit: 4
     t.datetime "lifetime"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "branches", force: :cascade do |t|
-    t.text     "name"
-    t.string   "address"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.string   "phone"
-    t.integer  "store_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.text     "name",       limit: 65535
+    t.string   "address",    limit: 255
+    t.float    "latitude",   limit: 24
+    t.float    "longitude",  limit: 24
+    t.string   "phone",      limit: 255
+    t.integer  "store_id",   limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "branches_promos", id: false, force: :cascade do |t|
-    t.integer "promo_id"
-    t.integer "branch_id"
+    t.integer "promo_id",  limit: 4
+    t.integer "branch_id", limit: 4
   end
 
-  add_index "branches_promos", ["branch_id"], name: "index_branches_promos_on_branch_id"
-  add_index "branches_promos", ["promo_id", "branch_id"], name: "index_branches_promos_on_promo_id_and_branch_id", unique: true
-  add_index "branches_promos", ["promo_id"], name: "index_branches_promos_on_promo_id"
+  add_index "branches_promos", ["branch_id"], name: "index_branches_promos_on_branch_id", using: :btree
+  add_index "branches_promos", ["promo_id", "branch_id"], name: "index_branches_promos_on_promo_id_and_branch_id", unique: true, using: :btree
+  add_index "branches_promos", ["promo_id"], name: "index_branches_promos_on_promo_id", using: :btree
 
   create_table "promos", force: :cascade do |t|
-    t.string   "title"
-    t.text     "description"
-    t.text     "terms"
+    t.string   "title",           limit: 255
+    t.text     "description",     limit: 65535
+    t.text     "terms",           limit: 65535
     t.datetime "expiration_date"
-    t.integer  "people_limit"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.integer  "people_limit",    limit: 4
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "redemptions", force: :cascade do |t|
-    t.string   "code"
-    t.integer  "promo_id"
-    t.integer  "user_id"
-    t.boolean  "redeemed",   default: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.string   "code",       limit: 255
+    t.integer  "promo_id",   limit: 4
+    t.integer  "user_id",    limit: 4
+    t.boolean  "redeemed",   limit: 1,   default: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   create_table "stores", force: :cascade do |t|
-    t.string   "email"
-    t.string   "name"
-    t.string   "category"
-    t.string   "main_phone"
-    t.string   "password"
-    t.string   "salt"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "email",      limit: 255
+    t.string   "name",       limit: 255
+    t.string   "category",   limit: 255
+    t.string   "main_phone", limit: 255
+    t.string   "password",   limit: 255
+    t.string   "salt",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email"
-    t.string   "name"
-    t.boolean  "gender"
+    t.string   "email",      limit: 255
+    t.string   "name",       limit: 255
+    t.boolean  "gender",     limit: 1
     t.date     "birthday"
-    t.string   "password"
-    t.string   "salt"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "password",   limit: 255
+    t.string   "salt",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
 end
