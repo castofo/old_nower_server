@@ -26,6 +26,6 @@ class Branch < ActiveRecord::Base
     cos( (longitude / #{CustomMath.converter}) -
     #{CustomMath.to_rad longitude.to_f} ) +
     sin( #{CustomMath.to_rad latitude.to_f} ) *
-    sin( latitude / #{CustomMath.converter} ) ) < #{range_in_km}"
+    sin( latitude / #{CustomMath.converter} ) ) < #{range_in_km / 10}"
   end
 end
