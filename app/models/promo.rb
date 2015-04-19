@@ -13,6 +13,6 @@ class Promo < ActiveRecord::Base
 
   #TODO Handle with timezones
   def has_expired
-    return DateTime.now.change(offset: "+0000") > expiration_date
+    DateTime.now.new_offset(-5/24).change(offset: "+0000") > expiration_date
   end
 end
