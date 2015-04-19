@@ -51,7 +51,7 @@ class RedemptionsController < ApplicationController
       if redemption.redeemed
         redemption.errors.add(:code, "was already redeemed")
       else
-        redemption.redeemed = true
+        #TODO redemption.redeemed = true -- Commented for test purposes
         if redemption.save
           render json: {
             success: true,
