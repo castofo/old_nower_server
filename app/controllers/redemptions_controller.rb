@@ -44,8 +44,13 @@ class RedemptionsController < ApplicationController
 
   def redeem
     redemption = Redemption.find_by redeem_params
-    if redemption
-      if !redemption.redeemed
+    if !redemption
+      redemption = Redemption.new
+      redemption.errors.add(:code, "is invalid")
+    else
+      if redemption.redeemed
+        redemption.errors.add(:code, "was already redeemed")
+      else
         redemption.redeemed = true
         if redemption.save
           render json: {
@@ -55,24 +60,14 @@ class RedemptionsController < ApplicationController
           },
           methods: [:available_redemptions],
           except: [:created_at, :updated_at, :password, :salt]
-        else
-          render json: {
-            success: false,
-            errors: redemption.errors
-          }
+          return # KEEP THIS or a double render will occur
         end
-      else
-        render json: {
-          success: false,
-          errors: ['The code was already redeemed']
-        }
       end
-    else
-      render json: {
-        success: false,
-        errors: ['The code is invalid']
-      }
     end
+    render json: {
+      success: false,
+      errors: redemption.errors
+    }
   end
 
   private
