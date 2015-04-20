@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   validates :birthday, presence: true
   validates :password, presence: true, confirmation: true
   validates_presence_of :password_confirmation, if: :password_changed?
+  validate :gender_correct_value
+
   has_many :redemptions
 
   before_save :encrypt_password
@@ -32,5 +34,11 @@ class User < ActiveRecord::Base
 
   def generate_salt
     return Digest::SHA2.hexdigest "#{SecureRandom.hex 8}Nower#{Time.now}"
+  end
+
+  def gender_correct_value
+    if gender != "m" && gender != "f"
+      errors.add(:gender, "is invalid (m or f)")
+    end
   end
 end

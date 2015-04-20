@@ -5,7 +5,7 @@ class PromosController < ApplicationController
       promos: Promo.all
     },
     only: [:promos, :id, :title, :expiration_date],
-    methods: [:available_redemptions],
+    methods: [:available_redemptions, :has_expired],
     include: {
         branches: {
           only: [:id, :latitude, :longitude, :store_id]
@@ -20,7 +20,7 @@ class PromosController < ApplicationController
         promo: promo
       },
       except: [:created_at, :updated_at],
-      methods: [:available_redemptions]
+      methods: [:available_redemptions, :has_expired]
     else
       render json: {
         success: false,
@@ -71,7 +71,7 @@ class PromosController < ApplicationController
         promos: promos
       },
       except: [:created_at, :updated_at],
-      methods: [:available_redemptions]
+      methods: [:available_redemptions, :has_expired]
     end
   end
 
