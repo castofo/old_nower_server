@@ -24,9 +24,7 @@ class RedemptionsController < ApplicationController
       # No errors, continue to create the redemption
       redemption.user = user
       redemption.promo = promo
-      begin
-        redemption.code = (SecureRandom.hex 3).upcase
-      end while Redemption.exists? code: redemption.code
+      redemption.generate_code
       if redemption.save
         render json: {
           success: true,
