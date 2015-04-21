@@ -9,11 +9,13 @@ Rails.application.routes.draw do
   get 'stores/branches/:id', to: 'stores#get_branches'
   get 'users', to: 'users#index'
   get 'branches', to: 'branches#index'
+  get 'categories', to: 'categories#index'
 
   get 'promos/:id', to: 'promos#show'
   get 'stores/:id', to: 'stores#show'
   get 'users/:id', to: 'users#show'
   get 'user/redemptions/:id', to: 'users#get_redemptions'
+  get 'categories/:id', to: 'categories#show'
 
   post 'stores', to: 'stores#create'
   post 'users', to: 'users#create'
