@@ -17,7 +17,7 @@ describe Store do
     context "when email already exists" do
       first = Store.create name: "Test", email: "test1@gmail.com",
                            main_phone: "1234567", password: "123",
-                           password_confirmation: "123"
+                           password_confirmation: "123", category_id: 1
 
       it "should add the correct error message" do
         store = Store.create email: "test1@gmail.com"
@@ -93,7 +93,7 @@ describe Store do
     context "when changing password with confirmation unmatching" do
       first = Store.create name: "Test", email: "test2@gmail.com",
                            main_phone: "1234567", password: "123",
-                           password_confirmation: "123"
+                           password_confirmation: "123", category_id: 1
 
       it "should add the correct error message" do
         store = Store.find_by email: "test2@gmail.com"
