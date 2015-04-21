@@ -3,7 +3,9 @@ class Promo < ActiveRecord::Base
   validates :description, presence: true
   validates :terms, presence: true
   validates :expiration_date, presence: true
+  validate :expiration_date_correct_value
   validates :people_limit, presence: true
+  validate :people_limit_correct_value
 
   has_and_belongs_to_many :branches
 
@@ -13,6 +15,18 @@ class Promo < ActiveRecord::Base
 
   #TODO Handle with timezones
   def has_expired
-    DateTime.now.new_offset(-5/24).change(offset: "+0000") > expiration_date
+    PromosHelper.current_time > expiration_date
+  end
+
+private
+  def expiration_date_correct_value
+    return if !expiration_date
+    errors.add(:expiration_date, "can not be expired") if has_expired
+  end
+
+  def people_limit_correct_value
+    return if !people_limit
+    message = "can not be negative or zero"
+    errors.add(:people_limit, message) if people_limit < 0
   end
 end
