@@ -14,7 +14,7 @@ describe User do
       end
     end
 
-    context "when user email already exists" do
+    context "when email already exists" do
       first = User.create name: "Test", email: "test1@gmail.com",
                           birthday: 20.years.ago, gender: "m", password: "123",
                           password_confirmation: "123"

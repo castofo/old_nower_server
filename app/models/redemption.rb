@@ -12,4 +12,11 @@ class Redemption < ActiveRecord::Base
     return unless branches.any?
     return branches.first.store.name
   end
+
+  def generate_code
+    begin
+      self.code = (SecureRandom.hex 3).upcase
+    end while Redemption.exists? code: self.code
+    self.code
+  end
 end
