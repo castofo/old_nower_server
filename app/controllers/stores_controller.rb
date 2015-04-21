@@ -10,29 +10,25 @@ class StoresController < ApplicationController
 
   def create
     store = Store.new create_params
-    category_ids = []
-    create_params_categories[:categories].each do | category |
-      category_ids.push(category["id"])
-    end
-    categories = Category.where(id: category_ids)
-    store.categories = categories
-    if store.save
+    category = Category.find_by id: create_params[:category_id]
+    store.errors.add(:category, "is invalid") if !category
+    if store.errors.empty? && store.save
       render json: {
         success: true,
         store: store
       },
       include: {
-          categories: {
+          category: {
             only: [:id, :name]
           },
       },
       except: [:password, :salt, :created_at, :updated_at]
-    else
-      render json: {
-        success: false,
-        errors: store.errors
-      }
+      return # Keep this to avoid double render
     end
+    render json: {
+      success: false,
+      errors: store.errors
+    }
   end
 
   def show
@@ -77,15 +73,11 @@ class StoresController < ApplicationController
 
   private
   def create_params
-    params.require(:store).permit(:email, :name, :main_phone,
-                                  :password, :password_confirmation)
+    params.require(:store).permit(:email, :name, :main_phone, :password,
+                                  :password_confirmation, :category_id)
   end
 
   def login_params
     params.require(:store).permit(:email, :password).merge(user_type: "store")
-  end
-
-  def create_params_categories
-    params.require(:store).permit(categories: [:id])
   end
 end

@@ -32,14 +32,19 @@ class PromosController < ApplicationController
 
   def create
     promo = Promo.new create_params
+    branches_json = create_params_branches[:branches]
+    promo.errors.add(:branches, "were not selected") if !branches_json
     arr = []
-    create_params_branches[:branches].each do | branch |
-      arr.push(branch["id"])
+    if promo.errors.empty?
+      create_params_branches[:branches].each do | branch |
+        arr.push(branch["id"])
+      end
     end
     branches = Branch.where(id: arr)
     if branches.count != arr.count
       promo.errors.add(:branches, "some provided branches are invalid")
-    else
+    end
+    if promo.errors.empty?
       promo.branches = branches
       if promo.save
         render json: {

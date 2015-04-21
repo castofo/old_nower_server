@@ -7,9 +7,9 @@ class Store < ActiveRecord::Base
   validates :main_phone, presence: true
   validates :password, presence: true, confirmation: true
   validates_presence_of :password_confirmation, if: :password_changed?
-
+  validates :category_id, presence: true
   has_many :branches, dependent: :delete_all
-  has_and_belongs_to_many :categories
+  belongs_to :category
 
   before_save :encrypt_password
 
