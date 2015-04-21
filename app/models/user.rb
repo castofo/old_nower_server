@@ -5,10 +5,11 @@ class User < ActiveRecord::Base
                     }
   validates :name, presence: true
   validates :gender, presence: true
+  validate :gender_correct_value
   validates :birthday, presence: true
+  validate :birthday_correct_value
   validates :password, presence: true, confirmation: true
   validates_presence_of :password_confirmation, if: :password_changed?
-  validate :gender_correct_value
 
   has_many :redemptions
 
@@ -40,5 +41,11 @@ class User < ActiveRecord::Base
     if gender != "m" && gender != "f"
       errors.add(:gender, "is invalid (m or f)")
     end
+  end
+
+  def birthday_correct_value
+    return if !birthday
+    errors.add(:birthday, "minimum age is 12") unless birthday <= 12.years.ago
+    errors.add(:birthday, "maximum age is 150") unless birthday >= 150.years.ago
   end
 end
