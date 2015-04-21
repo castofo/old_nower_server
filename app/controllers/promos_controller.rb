@@ -38,10 +38,7 @@ class PromosController < ApplicationController
     end
     branches = Branch.where(id: arr)
     if branches.count != arr.count
-      render json: {
-        success: false,
-        errors: ["Some provided branches are invalid"]
-      }
+      promo.errors.add(:branches, "some provided branches are invalid")
     else
       promo.branches = branches
       if promo.save
@@ -51,13 +48,13 @@ class PromosController < ApplicationController
           branches: promo.branches
         },
         except: [:created_at, :updated_at]
-      else
-        render json: {
-          success: false,
-          errors: promo.errors
-        }
+        return # Keep this to avoid double render
       end
     end
+    render json: {
+      success: false,
+      errors: promo.errors
+    }
   end
 
   def fetch_promos
