@@ -20,11 +20,10 @@ describe User do
                           password_confirmation: "123"
 
       it "should add the correct error message" do
-        usr = User.create name: "Test", email: "test1@gmail.com",
-                          birthday: 20.years.ago, gender: "m", password: "123",
-                          password_confirmation: "123"
-        expect(usr.errors.messages[:email]).to include("has already been taken")
-        usr.destroy
+        user = User.create email: "test1@gmail.com"
+        message = "has already been taken"
+        expect(user.errors.messages[:email]).to include(message)
+        user.destroy
         first.destroy
       end
     end
