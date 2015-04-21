@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150419161128) do
+ActiveRecord::Schema.define(version: 20150421022218) do
 
   create_table "auths", force: :cascade do |t|
     t.string   "token",      limit: 255
@@ -42,6 +42,21 @@ ActiveRecord::Schema.define(version: 20150419161128) do
   add_index "branches_promos", ["promo_id", "branch_id"], name: "index_branches_promos_on_promo_id_and_branch_id", unique: true, using: :btree
   add_index "branches_promos", ["promo_id"], name: "index_branches_promos_on_promo_id", using: :btree
 
+  create_table "categories", force: :cascade do |t|
+    t.string   "name",        limit: 255
+    t.string   "description", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  create_table "categories_stores", id: false, force: :cascade do |t|
+    t.integer "category_id", limit: 4
+    t.integer "store_id",    limit: 4
+  end
+
+  add_index "categories_stores", ["category_id"], name: "index_categories_stores_on_category_id", using: :btree
+  add_index "categories_stores", ["store_id"], name: "index_categories_stores_on_store_id", using: :btree
+
   create_table "promos", force: :cascade do |t|
     t.string   "title",           limit: 255
     t.text     "description",     limit: 65535
@@ -64,7 +79,6 @@ ActiveRecord::Schema.define(version: 20150419161128) do
   create_table "stores", force: :cascade do |t|
     t.string   "email",      limit: 255
     t.string   "name",       limit: 255
-    t.string   "category",   limit: 255
     t.string   "main_phone", limit: 255
     t.string   "password",   limit: 255
     t.string   "salt",       limit: 255

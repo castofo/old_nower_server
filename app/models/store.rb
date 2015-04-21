@@ -4,11 +4,12 @@ class Store < ActiveRecord::Base
     with: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}/
   }
   validates :name, presence: true
-  validates :category, presence: true
   validates :main_phone, presence: true
   validates :password, presence: true, confirmation: true
   validates_presence_of :password_confirmation, if: :password_changed?
+
   has_many :branches, dependent: :delete_all
+  has_and_belongs_to_many :categories
 
   before_save :encrypt_password
 
