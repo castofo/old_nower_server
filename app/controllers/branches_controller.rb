@@ -41,8 +41,7 @@ class BranchesController < ApplicationController
   end
 
   def get_by_locations
-    #branches = Branch.find_by_sql Branch.branches_without_expired_promos_query
-    branches = Branch.all
+    branches = Branch.find_by_sql Branch.branches_with_store_name_query
     branches = branches.as_json(except: [:created_at, :updated_at])
     branches.each do |branch|
       branch["promos"] = Promo.find_by_sql(
