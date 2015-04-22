@@ -33,12 +33,4 @@ class Branch < ActiveRecord::Base
           sin( #{CustomMath.to_rad latitude.to_f} ) *
           sin( latitude / #{CustomMath.converter} ) ) < #{range_in_km / 10}"
   end
-
-  def self.branches_with_store_name_query
-    "SELECT DISTINCT(branches.id), branches.name, address, latitude,
-            longitude, store_id, branches.created_at, branches.updated_at,
-            stores.name AS store_name
-    FROM branches, stores
-    WHERE stores.id = branches.store_id"
-  end
 end

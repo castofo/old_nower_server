@@ -5,6 +5,11 @@ class StoresController < ApplicationController
     render json: {
       stores: Store.all
     },
+    include: {
+      category: {
+        only: [:id, :name]
+      }
+    },
     except: [:password, :salt, :created_at, :updated_at]
   end
 
@@ -34,6 +39,11 @@ class StoresController < ApplicationController
   def show
     render json: {
       store: current_person
+    },
+    include: {
+      category: {
+        only: [:id, :name]
+      }
     },
     except: [:salt, :created_at, :updated_at, :password]
   end
