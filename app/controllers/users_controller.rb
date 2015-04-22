@@ -47,7 +47,9 @@ class UsersController < ApplicationController
     else
       render json: {
         success: false,
-        errors: ["Login failed"]
+        errors: {
+          login: ["Wrong email or password"]
+        }
       }
     end
   end
