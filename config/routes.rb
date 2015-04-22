@@ -30,6 +30,9 @@ Rails.application.routes.draw do
   post 'promo/now', to: 'redemptions#generate_code'
   post 'promos/details', to: 'promos#fetch_promos'
   post 'promos/locations', to: 'branches#get_by_locations_in_range'
+
+  put 'branches', to: 'branches#update'
+  patch 'branches', to: 'branches#update'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

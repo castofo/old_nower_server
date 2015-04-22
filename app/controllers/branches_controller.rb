@@ -36,6 +36,27 @@ class BranchesController < ApplicationController
     status: status ? status : :unprocessable_entity
   end
 
+  def update
+    branch = Branch.find_by id: update_params[:id]
+    if !branch
+      branch = Branch.new
+      branch.errors.add(:id, "is invalid")
+      status = :bad_request
+    elsif branch.errors.empty? && branch.update_attributes(update_params)
+      render json: {
+        success: true,
+        branch: branch
+      },
+      except: [:created_at, :updated_at]
+      return # Keep this to avoid double render
+    end
+    render json: {
+      success: false,
+      errors: branch.errors
+    },
+    status: status ? status : :unprocessable_entity
+  end
+
   def get_by_locations
     branches = Branch.all
     branches = branches.as_json(except: [:created_at, :updated_at])
@@ -73,6 +94,11 @@ class BranchesController < ApplicationController
   def create_params
     params.require("branch").permit("name", "address", "latitude", "longitude",
                                     "phone", "store_id")
+  end
+
+  def update_params
+    params.require("branch").permit("id", "name", "address", "latitude",
+                                    "longitude", "phone")
   end
 
   def get_by_locations_in_range_params
