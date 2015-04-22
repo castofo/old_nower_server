@@ -9,9 +9,11 @@ class ApplicationController < ActionController::Base
     if !logged_in?
       render json: {
         success: false,
-        errors: ["You don't have access"]
+        errors: {
+          login: ["You don't have access"]
+        }
       },
-      status: 401
+      status: :unauthorized
     end
   end
 

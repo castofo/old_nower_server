@@ -12,32 +12,28 @@ class BranchesController < ApplicationController
     if branch.name && branch.store_id
       already = Branch.where name: branch.name, store_id: branch.store_id
       if already.count != 0
-        render json: {
-          success: false,
-          errors: ["Branch already exists"],
-        }
-        return
+        branch.errors.add(:branch, "already exists")
+        status = :conflict
       end
-      if !Store.find_by id: branch.store_id
-        render json: {
-          success: false,
-          errors: ["Invalid store"]
-        }
-        return
+      if branch.errors.empty? && !Store.find_by(id: branch.store_id)
+        branch.errors.add(:store, "is invalid")
+        status = :unprocessable_entity
       end
     end
-    if branch.save
+    if branch.errors.empty? && branch.save
       render json: {
         success: true,
         branch: branch
       },
-      except: [:created_at, :updated_at]
-    else
-      render json: {
-        success: false,
-        errors: branch.errors
-      }
+      except: [:created_at, :updated_at],
+      status: :created
+      return # Keep this to avoid double render
     end
+    render json: {
+      success: false,
+      errors: branch.errors
+    },
+    status: status ? status : :unprocessable_entity
   end
 
   def get_by_locations

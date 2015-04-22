@@ -74,7 +74,7 @@ class UsersController < ApplicationController
     else
       render json: {
         errors: {
-          user: ["Invalid user"]
+          user: ["is invalid"]
         }
       },
       status: :unauthorized
