@@ -33,6 +33,8 @@ Rails.application.routes.draw do
 
   put 'branches', to: 'branches#update'
   patch 'branches', to: 'branches#update'
+
+  delete 'branches/:id', to: 'branches#destroy'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
