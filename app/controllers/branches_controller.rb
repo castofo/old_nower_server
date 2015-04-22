@@ -51,8 +51,7 @@ class BranchesController < ApplicationController
     render json: {
       locations: branches
     },
-    include: [:promos],
-    methods: [:store_name]
+    include: [:promos]
   end
 
   def get_by_locations_in_range
