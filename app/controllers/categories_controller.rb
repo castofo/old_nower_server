@@ -17,8 +17,11 @@ class CategoriesController < ApplicationController
       only: [:category, :id, :name]
     else
       render json: {
-        error: "category not found"
-      }
+        errors: {
+          category: ["not found"]
+        }
+      },
+      status: :not_found
     end
   end
 end

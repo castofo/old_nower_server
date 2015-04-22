@@ -15,12 +15,14 @@ class UsersController < ApplicationController
         success: true,
         user: user
       },
-      except: [:password, :salt, :created_at, :updated_at]
+      except: [:password, :salt, :created_at, :updated_at],
+      status: :created
     else
       render json: {
         success: false,
         errors: user.errors
-      }
+      },
+      status: :unprocessable_entity
     end
   end
 
@@ -47,8 +49,11 @@ class UsersController < ApplicationController
     else
       render json: {
         success: false,
-        errors: ["Login failed"]
-      }
+        errors: {
+          login: ["Wrong email or password"]
+        }
+      },
+      status: :bad_request
     end
   end
 
@@ -68,8 +73,11 @@ class UsersController < ApplicationController
       }
     else
       render json: {
-        errors: ["Invalid user"]
-      }
+        errors: {
+          user: ["is invalid"]
+        }
+      },
+      status: :unauthorized
     end
   end
 

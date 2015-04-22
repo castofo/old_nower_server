@@ -37,7 +37,8 @@ class RedemptionsController < ApplicationController
     render json: {
       success: false,
       errors: redemption.errors
-    }
+    },
+    status: :unprocessable_entity
   end
 
   def redeem
@@ -65,7 +66,8 @@ class RedemptionsController < ApplicationController
     render json: {
       success: false,
       errors: redemption.errors
-    }
+    },
+    status: :unprocessable_entity
   end
 
   private

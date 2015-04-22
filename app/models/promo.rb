@@ -18,6 +18,22 @@ class Promo < ActiveRecord::Base
     PromosHelper.current_time > expiration_date
   end
 
+  def self.promos_available_by_branch_query(branch_id)
+    "SELECT promos.id, title, description, terms, expiration_date,
+            people_limit, promos.created_at, promos.updated_at,
+            promos.people_limit -
+            (SELECT COUNT(*)
+             FROM redemptions
+             WHERE redemptions.promo_id = promos.id)
+            AS `available_redemptions`
+    FROM promos
+    LEFT OUTER JOIN branches_promos ON promos.id = branches_promos.promo_id
+    LEFT OUTER JOIN branches ON branches_promos.branch_id = branches.id
+    WHERE branches.id = #{branch_id}
+    HAVING available_redemptions > 0 AND
+    expiration_date > \"#{PromosHelper.current_time}\""
+  end
+
 private
   def expiration_date_correct_value
     return if !expiration_date

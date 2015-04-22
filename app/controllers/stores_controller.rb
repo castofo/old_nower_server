@@ -5,6 +5,11 @@ class StoresController < ApplicationController
     render json: {
       stores: Store.all
     },
+    include: {
+      category: {
+        only: [:id, :name]
+      }
+    },
     except: [:password, :salt, :created_at, :updated_at]
   end
 
@@ -22,18 +27,25 @@ class StoresController < ApplicationController
             only: [:id, :name]
           },
       },
-      except: [:password, :salt, :created_at, :updated_at]
+      except: [:password, :salt, :created_at, :updated_at],
+      status: :created
       return # Keep this to avoid double render
     end
     render json: {
       success: false,
       errors: store.errors
-    }
+    },
+    status: :unprocessable_entity
   end
 
   def show
     render json: {
       store: current_person
+    },
+    include: {
+      category: {
+        only: [:id, :name]
+      }
     },
     except: [:salt, :created_at, :updated_at, :password]
   end
@@ -52,8 +64,11 @@ class StoresController < ApplicationController
     else
       render json: {
         success: false,
-        errors: ["Login failed"]
-      }
+        errors: {
+          login: ["Wrong email or password"]
+        }
+      },
+      status: :bad_request
     end
   end
 
@@ -66,8 +81,11 @@ class StoresController < ApplicationController
       except: [:created_at, :updated_at]
     else
       render json: {
-        errors: ["Invalid store"]
-      }
+        errors: {
+          store: ["is invalid"]
+        }
+      },
+      status: :unauthorized
     end
   end
 
