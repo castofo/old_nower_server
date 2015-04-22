@@ -70,7 +70,9 @@ class UsersController < ApplicationController
       }
     else
       render json: {
-        errors: ["Invalid user"]
+        errors: {
+          user: ["Invalid user"]
+        }
       }
     end
   end

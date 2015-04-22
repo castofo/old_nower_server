@@ -22,9 +22,11 @@ class PromosController < ApplicationController
       except: [:created_at, :updated_at],
       methods: [:available_redemptions, :has_expired]
     else
+      promo = Promo.new
+      promo.errors.add(:id, "was not found")
       render json: {
         success: false,
-        errors: ["Unable to find the promo"]
+        errors: promo.errors
       },
       status: 404
     end
@@ -63,18 +65,29 @@ class PromosController < ApplicationController
   end
 
   def fetch_promos
-    promo_ids = Set.new
-    fetch_promos_params[:promos].each do | promo |
-      promo_ids.add promo["id"]
+    promos_json = fetch_promos_params[:promos]
+    promo = Promo.new
+    promo.errors.add(:ids, "were not provided") if !promos_json
+    if promo.errors.empty?
+      promo_ids = Set.new
+      fetch_promos_params[:promos].each do | promo |
+        promo_ids.add promo["id"]
+      end
+      promos = Promo.where id: promo_ids.to_a
+      promo.errors.add(:ids, "were not found") if promos.count == 0
+      if promo.errors.empty?
+        render json: {
+          promos: promos
+        },
+        except: [:created_at, :updated_at],
+        methods: [:available_redemptions, :has_expired]
+        return # Keep this to avoid double render
+      end
     end
-    promos = Promo.where id: promo_ids.to_a
-    if promos
-      render json: {
-        promos: promos
-      },
-      except: [:created_at, :updated_at],
-      methods: [:available_redemptions, :has_expired]
-    end
+    render json: {
+      success: false,
+      errors: promo.errors
+    }
   end
 
   private
