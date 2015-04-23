@@ -54,13 +54,14 @@ class StoresController < ApplicationController
     email = login_params[:email]
     passwd = login_params[:password]
     user_type = login_params[:user_type]
-    store = Auth.authenticate email, passwd, user_type
-    if store
+    auth = Auth.authenticate email, passwd, user_type
+    if auth
       render json: {
         success: true,
-        store: store
+        token: auth.token,
+        store: Store.find_by(id: auth.store_id)
       },
-      only: [:success, :store, :token, :store_id]
+      except: [:password, :salt, :created_at, :updated_at, :category_id]
     else
       render json: {
         success: false,
