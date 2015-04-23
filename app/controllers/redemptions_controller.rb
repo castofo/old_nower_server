@@ -8,8 +8,8 @@ class RedemptionsController < ApplicationController
     redemption = Redemption.new
 
     # Catching errors
-    redemption.errors.add(:promo, "is invalid") if !promo
-    redemption.errors.add(:user, "is ivalid") if !user
+    redemption.errors.add(:promo_id, "is invalid") if !promo
+    redemption.errors.add(:user, "is invalid") if !user
     if user && promo && Redemption.find_by(user: user, promo: promo)
       redemption.errors.add(:promo, "was already taken by you")
     end
