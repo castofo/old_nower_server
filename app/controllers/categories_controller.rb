@@ -10,7 +10,7 @@ class CategoriesController < ApplicationController
 
   def create
     category = Category.new create_params
-    if category
+    if category.save
       render json: {
         success: true,
         store: category
