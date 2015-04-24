@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   post 'users', to: 'users#create'
   post 'promos', to: 'promos#create'
   post 'branches', to: 'branches#create'
+  post 'categories', to: 'categories#create'
 
   post 'redemptions/redeem', to: 'redemptions#redeem'
 
