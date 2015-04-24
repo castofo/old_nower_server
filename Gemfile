@@ -54,3 +54,9 @@ group :development, :test do
 
   gem 'rspec-rails'
 end
+
+# Carrierwave to handle images
+gem 'carrierwave'
+
+# MiniMagick to apply resizes to images (CarrierWave works with this)
+gem 'mini_magick'

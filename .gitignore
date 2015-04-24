@@ -16,6 +16,9 @@
 !/log/.keep
 /tmp
 
+
+# Ignore uploads folder (logos, promo images...)
+/public/uploads
+
 # Ignoring cache from production server
 ./cache/
-
