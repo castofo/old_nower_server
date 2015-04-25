@@ -115,16 +115,16 @@ class BranchesController < ApplicationController
 
   private
   def create_params
-    params.require("branch").permit("name", "address", "latitude", "longitude",
-                                    "phone", "store_id")
+    params.require(:branch).permit(:name, :address, :latitude, :longitude,
+                                    :phone, :store_id)
   end
 
   def update_params
-    params.require("branch").permit("id", "name", "address", "latitude",
-                                    "longitude", "phone")
+    params.require(:branch).permit(:id, :name, :address, :latitude,
+                                    :longitude, :phone)
   end
 
   def get_by_locations_in_range_params
-    params.require("user_location").permit("latitude", "longitude")
+    params.require(:user_location).permit(:latitude, :longitude)
   end
 end
