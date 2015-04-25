@@ -18,6 +18,10 @@ class Promo < ActiveRecord::Base
     PromosHelper.current_time > expiration_date
   end
 
+  def store_logo
+    self.branches.first.store.logo.url(:small)
+  end
+
   def self.promos_available_by_branch_query(branch_id)
     "SELECT promos.id, title, description, terms, expiration_date,
             people_limit, promos.created_at, promos.updated_at,

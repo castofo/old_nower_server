@@ -84,8 +84,9 @@ class BranchesController < ApplicationController
     branches = Branch.all
     branches = branches.as_json(except: [:created_at, :updated_at])
     branches.each do |branch|
-      store_name = Branch.find(branch["id"]).store_name
-      branch["store_name"] = store_name
+      store = Branch.find(branch["id"]).store
+      branch["store_name"] = store.name
+      branch["store_logo"] = store.logo.url(:small)
       branch["promos"] = Promo.find_by_sql(
             Promo.promos_available_by_branch_query branch["id"])
                   .as_json(except: [:created_at, :updated_at])
@@ -101,8 +102,9 @@ class BranchesController < ApplicationController
     branches = Branch.find_by_sql(query)
     branches = branches.as_json(except: [:created_at, :updated_at])
     branches.each do |branch|
-      store_name = Branch.find(branch["id"]).store_name
-      branch["store_name"] = store_name
+      store = Branch.find(branch["id"]).store
+      branch["store_name"] = store.name
+      branch["store_logo"] = store.logo.url(:small)
       branch["promos"] = Promo.find_by_sql(
             Promo.promos_available_by_branch_query branch["id"])
                     .as_json(except: [:created_at, :updated_at])
