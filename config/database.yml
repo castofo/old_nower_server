@@ -27,7 +27,7 @@ test:
 production:
   <<: *default
   adapter: mysql2
-  user: b1ee358a295bc9
-  password: 3ebf9172
-  host: us-cdbr-iron-east-02.cleardb.net
-  database: heroku_2b670ab49a887b1
+  user: root
+  password: HIFeASpJXI
+  host: localhost
+  database: rails

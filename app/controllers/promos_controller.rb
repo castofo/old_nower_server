@@ -92,7 +92,7 @@ class PromosController < ApplicationController
           promos: promos
         },
         except: [:created_at, :updated_at],
-        methods: [:available_redemptions, :has_expired]
+        methods: [:available_redemptions, :has_expired, :store_logo]
         return # Keep this to avoid double render
       end
     end
