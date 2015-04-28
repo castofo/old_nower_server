@@ -7,6 +7,8 @@ class Promo < ActiveRecord::Base
   validates :people_limit, presence: true
   validate :people_limit_correct_value
 
+  mount_uploader :picture, PromoPictureUploader
+
   has_and_belongs_to_many :branches
 
   def available_redemptions

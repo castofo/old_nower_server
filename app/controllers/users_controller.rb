@@ -67,7 +67,7 @@ class UsersController < ApplicationController
       methods: [:store_name, :store_logo],
       include: {
         promo: {
-          only: [:id, :title, :expiration_date],
+          only: [:id, :title, :expiration_date, :picture],
           methods: [:available_redemptions]
         }
       }
