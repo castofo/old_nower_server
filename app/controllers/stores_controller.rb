@@ -41,13 +41,13 @@ class StoresController < ApplicationController
   def update
     store = Store.find_by id: update_params[:id]
     if !store
-      branch = Store.new
-      branch.errors.add(:id, "is invalid")
+      store = Store.new
+      store.errors.add(:id, "is invalid")
       status = :bad_request
     elsif store.errors.empty? && store.update_attributes(update_params)
       render json: {
         success: true,
-        branch: store
+        store: store
       },
       except: [:created_at, :updated_at]
       return # Keep this to avoid double render

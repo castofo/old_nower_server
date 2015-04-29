@@ -33,7 +33,7 @@ class RedemptionsController < ApplicationController
         },
         methods: [:available_redemptions],
         only: [:success, :redemption, :code, :promo_id, :user_id, :redeemed,
-               :promo, :available_redemptions,]
+               :promo, :available_redemptions]
         return # KEEP THIS or a double render will occur
       end
     end

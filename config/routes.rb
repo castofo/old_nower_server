@@ -36,6 +36,8 @@ Rails.application.routes.draw do
   patch 'branches', to: 'branches#update'
   put 'stores', to: 'stores#update'
   patch 'stores', to: 'stores#update'
+  put 'promos', to: 'promos#update'
+  patch 'promos', to: 'promos#update'
 
   delete 'branches/:id', to: 'branches#destroy'
   # The priority is based upon order of creation: first created -> highest priority.
