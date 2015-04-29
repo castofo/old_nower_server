@@ -75,6 +75,27 @@ class PromosController < ApplicationController
     status: status ? status : :unprocessable_entity
   end
 
+  def update
+    promo = Promo.find_by id: update_params[:id]
+    if !promo
+      promo = Promo.new
+      promo.errors.add(:id, "is invalid")
+      status = :bad_request
+    elsif promo.errors.empty? && promo.update_attributes(update_params)
+      render json: {
+        success: true,
+        promo: promo
+      },
+      except: [:created_at, :updated_at]
+      return # Keep this to avoid double render
+    end
+    render json: {
+      success: false,
+      errors: promo.errors
+    },
+    status: status ? status : :unprocessable_entity
+  end
+
   def fetch_promos
     promos_json = fetch_promos_params[:promos]
     promo = Promo.new
@@ -116,6 +137,11 @@ class PromosController < ApplicationController
 
   def create_params_branches
     params.require(:promo).permit(branches: [:id])
+  end
+
+  def update_params
+    params.require(:promo).permit(:id, :title, :description, :terms,
+                                  :expiration_date, :people_limit, :picture)
   end
 
   def fetch_promos_params
