@@ -12,11 +12,11 @@ class BranchesController < ApplicationController
     if branch.name && branch.store_id
       already = Branch.where name: branch.name, store_id: branch.store_id
       if already.count != 0
-        branch.errors.add(:branch, "already exists")
+        branch.errors.add(:branch, I18n.t('errors.branch.already_exists'))
         status = :conflict
       end
       if branch.errors.empty? && !Store.find_by(id: branch.store_id)
-        branch.errors.add(:store, "is invalid")
+        branch.errors.add(:store, I18n.t('errors.store.is_invalid'))
         status = :unprocessable_entity
       end
     end
@@ -40,7 +40,7 @@ class BranchesController < ApplicationController
     branch = Branch.find_by id: update_params[:id]
     if !branch
       branch = Branch.new
-      branch.errors.add(:id, "is invalid")
+      branch.errors.add(:id, I18n.t('errors.id.is_invalid'))
       status = :bad_request
     elsif branch.errors.empty? && branch.update_attributes(update_params)
       render json: {
@@ -61,14 +61,14 @@ class BranchesController < ApplicationController
     branch = Branch.find_by id: params[:id]
     if !branch
       branch = Branch.new
-      branch.errors.add(:id, "is invalid")
+      branch.errors.add(:id, I18n.t('errors.id.is_invalid'))
       status = :bad_request
     else
       branch.destroy
       render json: {
         success: true,
         message: {
-          branch: ["was successfully deleted"]
+          branch: [I18n.t('messages.branch.deleted')]
         }
       }
       return # Keep this to avoid double render

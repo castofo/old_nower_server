@@ -43,13 +43,17 @@ class User < ActiveRecord::Base
 
   def gender_correct_value
     if gender != "m" && gender != "f"
-      errors.add(:gender, "is invalid (m or f)")
+      errors.add(:gender, I18n.t('errors.user.gender.is_invalid'))
     end
   end
 
   def birthday_correct_value
     return if !birthday
-    errors.add(:birthday, "minimum age is 12") unless birthday <= 12.years.ago
-    errors.add(:birthday, "maximum age is 150") unless birthday >= 150.years.ago
+    unless birthday <= 12.years.ago
+      errors.add(:birthday, I18n.t('errors.user.birthday.too_young'))
+    end
+    unless birthday >= 150.years.ago
+      errors.add(:birthday, I18n.t('errors.user.birthday.too_old'))
+    end
   end
 end

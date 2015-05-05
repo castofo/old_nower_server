@@ -20,4 +20,42 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  errors:
+    user:
+      wrong_email_or_password: "Wrong email or password"
+      is_invalid: "The user is invalid"
+      gender:
+        is_invalid: "The gender is invalid (should be 'm' o 'f')"
+      birthday:
+        too_young: "You should be 12 or older"
+        too_old: "The maximum age is 150"
+    branch:
+      already_exists: "The branch already exists"
+      not_selected: "Branches were not selected"
+      some_are_invalid: "Some provided branches are invalid"
+    store:
+      is_invalid: "The store is invalid"
+      wrong_email_or_password: "Wrong email or password"
+    id:
+      is_invalid: "The id is invalid"
+    category:
+      is_invalid: "The category is invalid"
+      not_found: "Category not found"
+    promo:
+      already_taken: "This promo was already taken by you"
+      already_expired: "This promo has already expired"
+      no_more_stock: "This promo has no more stock"
+      is_invalid: "The promo is invalid"
+      not_provided: "Promos were not provided"
+      some_are_invalid: "Some provided promos are invalid"
+      expiration_date:
+        cannot_be_expired: "The promo can not be expired"
+      people_limit:
+        is_negative: "The people limit can not be negative or zero"
+    redemption:
+      limit_exceeded: "You can not take more promos until at least one is redeemed"
+      invalid_code: "The promo code is invalid"
+      already_redeemed: "This promo code was already redeemed"
+  messages:
+    branch:
+      deleted: "The branch has been successfully deleted"

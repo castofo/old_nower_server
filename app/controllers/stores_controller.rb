@@ -16,7 +16,9 @@ class StoresController < ApplicationController
   def create
     store = Store.new create_params
     category = Category.find_by id: create_params[:category_id]
-    store.errors.add(:category, "is invalid") if !category
+    if !category
+      store.errors.add(:category, I18n.t('errors.category.is_invalid'))
+    end
     if store.errors.empty? && store.save
       render json: {
         success: true,
@@ -42,7 +44,7 @@ class StoresController < ApplicationController
     store = Store.find_by id: update_params[:id]
     if !store
       store = Store.new
-      store.errors.add(:id, "is invalid")
+      store.errors.add(:id, I18n.t('errors.id.is_invalid'))
       status = :bad_request
     elsif store.errors.empty? && store.update_attributes(update_params)
       render json: {
@@ -87,7 +89,7 @@ class StoresController < ApplicationController
       render json: {
         success: false,
         errors: {
-          login: ["Wrong email or password"]
+          login: [I18n.t('errors.store.wrong_email_or_password')]
         }
       },
       status: :bad_request
@@ -104,7 +106,7 @@ class StoresController < ApplicationController
     else
       render json: {
         errors: {
-          store: ["is invalid"]
+          store: [I18n.t('errors.store.is_invalid')]
         }
       },
       status: :unauthorized

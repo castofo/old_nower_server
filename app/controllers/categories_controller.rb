@@ -36,7 +36,7 @@ class CategoriesController < ApplicationController
     else
       render json: {
         errors: {
-          category: ["not found"]
+          category: [I18n.t('errors.category.not_found')]
         }
       },
       status: :not_found

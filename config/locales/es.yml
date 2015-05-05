@@ -1,0 +1,40 @@
+es:
+  errors:
+    user:
+      wrong_email_or_password: "Dirección de correo o contraseña inválidos"
+      is_invalid: "El usuario es incorrecto"
+      gender:
+        is_invalid: "El género es inválido (debe ser 'm' o 'f')"
+      birthday:
+        too_young: "Debes tener por lo menos 12 años de edad"
+        too_old: "La edad máxima 150 años"
+    branch:
+      already_exists: "La sucursal ya existe"
+      not_selected: "No se han seleccionado sucursales"
+      some_are_invalid: "Ciertas de las sucursales proporcionadas son incorrectas"
+    store:
+      is_invalid: "La tienda es incorrecta"
+      wrong_email_or_password: "Dirección de correo o contraseña inválidos"
+    id:
+      is_invalid: "El id es incorrecto"
+    category:
+      is_invalid: "La categoría es incorrecta"
+      not_found: "Categoría no encontrada"
+    promo:
+      already_taken: "Ya tomaste esta promoción"
+      already_expired: "Esta promoción ya caducó"
+      no_more_stock: "Ya se agotaron las existencias para esta promoción"
+      is_invalid: "La promoción es incorrecta"
+      not_provided: "No se proporcionaron promociones"
+      some_are_invalid: "Ciertas de las promociones proporcionadas son incorrectas"
+      expiration_date:
+        cannot_be_expired: "La promoción no puede estar vencida"
+      people_limit:
+        is_negative: "El número de personas límite no puede ser negativo o cero"
+    redemption:
+      limit_exceeded: "No puedes tomar más promociones hasta que redimas al menos una"
+      invalid_code: "El código de promoción es incorrecto"
+      already_redeemed: "Este código de promoción ya fue redimido"
+  messages:
+    branch:
+      deleted: "La sucursal ha sido borrada satisfactoriamente"

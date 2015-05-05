@@ -43,12 +43,15 @@ class Promo < ActiveRecord::Base
 private
   def expiration_date_correct_value
     return if !expiration_date
-    errors.add(:expiration_date, "can not be expired") if has_expired
+    if has_expired
+      error_key = 'errors.promo.expiration_date.cannot_be_expired'
+      errors.add(:expiration_date, I18n.t(error_key))
+    end
   end
 
   def people_limit_correct_value
     return if !people_limit
-    message = "can not be negative or zero"
+    message = I18n.t('errors.promo.people_limit.is_negative')
     errors.add(:people_limit, message) if people_limit < 0
   end
 end

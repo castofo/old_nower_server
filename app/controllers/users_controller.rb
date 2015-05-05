@@ -50,7 +50,7 @@ class UsersController < ApplicationController
       render json: {
         success: false,
         errors: {
-          login: ["Wrong email or password"]
+          login: [I18n.translate('errors.user.wrong_email_or_password')]
         }
       },
       status: :bad_request
@@ -74,7 +74,7 @@ class UsersController < ApplicationController
     else
       render json: {
         errors: {
-          user: ["is invalid"]
+          user: [I18n.translate('errors.user.is_invalid')]
         }
       },
       status: :unauthorized

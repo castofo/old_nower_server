@@ -23,7 +23,7 @@ class PromosController < ApplicationController
       methods: [:available_redemptions, :has_expired]
     else
       promo = Promo.new
-      promo.errors.add(:id, "was not found")
+      promo.errors.add(:id, I18n.t('errors.id.is_invalid'))
       render json: {
         success: false,
         errors: promo.errors
@@ -41,7 +41,7 @@ class PromosController < ApplicationController
       branches_json = create_params_branches[:branches]
     end
     if !branches_json
-      promo.errors.add(:branches, "were not selected")
+      promo.errors.add(:branches, I18n.t('errors.branch.not_selected'))
       status = :bad_request
     end
     arr = []
@@ -52,7 +52,7 @@ class PromosController < ApplicationController
     end
     branches = Branch.where(id: arr)
     if branches.count != arr.count
-      promo.errors.add(:branches, "some provided branches are invalid")
+      promo.errors.add(:branches, I18n.t('errors.branch.some_are_invalid'))
       status = :unprocessable_entity
     end
     if promo.errors.empty?
@@ -79,7 +79,7 @@ class PromosController < ApplicationController
     promo = Promo.find_by id: update_params[:id]
     if !promo
       promo = Promo.new
-      promo.errors.add(:id, "is invalid")
+      promo.errors.add(:id, I18n.t('errors.id.is_invalid'))
       status = :bad_request
     elsif promo.errors.empty? && promo.update_attributes(update_params)
       render json: {
@@ -100,7 +100,7 @@ class PromosController < ApplicationController
     promos_json = fetch_promos_params[:promos]
     promo = Promo.new
     if !promos_json
-      promo.errors.add(:ids, "were not provided")
+      promo.errors.add(:promos, I18n.t('errors.promo.not_provided'))
       status = :bad_request
     end
     if promo.errors.empty?
@@ -110,7 +110,7 @@ class PromosController < ApplicationController
       end
       promos = Promo.where id: promo_ids.to_a
       if promos.count == 0
-        promo.errors.add(:ids, "were not found")
+        promo.errors.add(:promos, I18n.t('errors.promo.some_are_invalid'))
         status = :unprocessable_entity
       end
       if promo.errors.empty?

@@ -8,22 +8,24 @@ class RedemptionsController < ApplicationController
     redemption = Redemption.new
 
     # Catching errors
-    redemption.errors.add(:promo_id, "is invalid") if !promo
-    redemption.errors.add(:user, "is invalid") if !user
+    if !promo
+      redemption.errors.add(:promo_id, I18n.t('errors.promo.is_invalid'))
+    end
+    redemption.errors.add(:user, I18n.t('errors.user.is_invalid')) if !user
     if user
       if promo && Redemption.find_by(user: user, promo: promo)
-        redemption.errors.add(:promo, "was already taken by you")
+        redemption.errors.add(:promo, I18n.t('errors.promo.already_taken'))
       end
       if user.active_redemptions >= 5
-        message = "can not take more promos until at least one is redeemed"
+        message = I18n.t('errors.redemption.limit_exceeded')
         redemption.errors.add(:user, message)
       end
     end
     if promo && promo.has_expired
-      redemption.errors.add(:promo, "has already expired")
+      redemption.errors.add(:promo, I18n.t('errors.promo.already_expired'))
     end
     if promo && promo.available_redemptions == 0
-      redemption.errors.add(:promo, "has no more stocks")
+      redemption.errors.add(:promo, I18n.t('errors.promo.no_more_stock'))
     end
     if !redemption.errors.any?
       # No errors, continue to create the redemption
@@ -53,10 +55,11 @@ class RedemptionsController < ApplicationController
     redemption = Redemption.find_by redeem_params
     if !redemption
       redemption = Redemption.new
-      redemption.errors.add(:code, "is invalid")
+      redemption.errors.add(:code, I18n.t('errors.redemption.invalid_code'))
     else
       if redemption.redeemed
-        redemption.errors.add(:code, "was already redeemed")
+        redemption.errors.add(:code,
+          I18n.t('errors.redemption.already_redeemed'))
       else
         redemption.redeemed = true #-- Commented for test purposes
         if redemption.save
