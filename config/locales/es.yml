@@ -1,8 +1,10 @@
 es:
+  # Custom messages
   errors:
     user:
       wrong_email_or_password: "Dirección de correo o contraseña inválidos"
       is_invalid: "El usuario es incorrecto"
+      unauthorized: "No tienes acceso"
       gender:
         is_invalid: "El género es inválido (debe ser 'm' o 'f')"
       birthday:
@@ -38,6 +40,7 @@ es:
   messages:
     branch:
       deleted: "La sucursal ha sido borrada satisfactoriamente"
+  # Default messages used by Active Record
   activerecord:
     errors:
       models:
