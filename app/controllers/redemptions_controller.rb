@@ -10,8 +10,14 @@ class RedemptionsController < ApplicationController
     # Catching errors
     redemption.errors.add(:promo_id, "is invalid") if !promo
     redemption.errors.add(:user, "is invalid") if !user
-    if user && promo && Redemption.find_by(user: user, promo: promo)
-      redemption.errors.add(:promo, "was already taken by you")
+    if user
+      if promo && Redemption.find_by(user: user, promo: promo)
+        redemption.errors.add(:promo, "was already taken by you")
+      end
+      if user.active_redemptions >= 5
+        message = "can not take more promos until at least one is redeemed"
+        redemption.errors.add(:user, message)
+      end
     end
     if promo && promo.has_expired
       redemption.errors.add(:promo, "has already expired")
@@ -19,7 +25,6 @@ class RedemptionsController < ApplicationController
     if promo && promo.available_redemptions == 0
       redemption.errors.add(:promo, "has no more stocks")
     end
-
     if !redemption.errors.any?
       # No errors, continue to create the redemption
       redemption.user = user
@@ -28,9 +33,12 @@ class RedemptionsController < ApplicationController
       if redemption.save
         render json: {
           success: true,
-          redemption: redemption
+          redemption: redemption,
+          promo: promo
         },
-        only: [:success, :redemption, :code, :promo_id, :user_id, :redeemed]
+        methods: [:available_redemptions],
+        only: [:success, :redemption, :code, :promo_id, :user_id, :redeemed,
+               :promo, :available_redemptions]
         return # KEEP THIS or a double render will occur
       end
     end
@@ -50,7 +58,7 @@ class RedemptionsController < ApplicationController
       if redemption.redeemed
         redemption.errors.add(:code, "was already redeemed")
       else
-        #TODO redemption.redeemed = true -- Commented for test purposes
+        redemption.redeemed = true #-- Commented for test purposes
         if redemption.save
           render json: {
             success: true,

@@ -11,6 +11,8 @@ class Store < ActiveRecord::Base
   has_many :branches, dependent: :delete_all
   belongs_to :category
 
+  mount_uploader :logo, StoreLogoUploader
+
   before_save :encrypt_password
 
   def self.authenticate(email, password)

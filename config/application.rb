@@ -28,7 +28,7 @@ module NowerServer
         origins '*'
         resource '*',
         :headers => :any,
-        :methods => [:get, :post, :options],
+        :methods => [:get, :post, :options, :put, :patch, :delete],
         :max_age => 1728000
       end
     end

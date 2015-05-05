@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   post 'users', to: 'users#create'
   post 'promos', to: 'promos#create'
   post 'branches', to: 'branches#create'
+  post 'categories', to: 'categories#create'
 
   post 'redemptions/redeem', to: 'redemptions#redeem'
 
@@ -33,6 +34,10 @@ Rails.application.routes.draw do
 
   put 'branches', to: 'branches#update'
   patch 'branches', to: 'branches#update'
+  put 'stores', to: 'stores#update'
+  patch 'stores', to: 'stores#update'
+  put 'promos', to: 'promos#update'
+  patch 'promos', to: 'promos#update'
 
   delete 'branches/:id', to: 'branches#destroy'
   # The priority is based upon order of creation: first created -> highest priority.

@@ -38,6 +38,27 @@ class StoresController < ApplicationController
     status: :unprocessable_entity
   end
 
+  def update
+    store = Store.find_by id: update_params[:id]
+    if !store
+      store = Store.new
+      store.errors.add(:id, "is invalid")
+      status = :bad_request
+    elsif store.errors.empty? && store.update_attributes(update_params)
+      render json: {
+        success: true,
+        store: store
+      },
+      except: [:created_at, :updated_at]
+      return # Keep this to avoid double render
+    end
+    render json: {
+      success: false,
+      errors: store.errors
+    },
+    status: status ? status : :unprocessable_entity
+  end
+
   def show
     render json: {
       store: current_person
@@ -93,7 +114,12 @@ class StoresController < ApplicationController
   private
   def create_params
     params.require(:store).permit(:email, :name, :main_phone, :password,
-                                  :password_confirmation, :category_id)
+                                  :password_confirmation, :category_id, :logo)
+  end
+
+  def update_params
+    params.require(:store).permit(:id, :email, :name, :main_phone, :password,
+                                  :password_confirmation, :category_id, :logo)
   end
 
   def login_params

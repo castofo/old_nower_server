@@ -21,6 +21,10 @@ class User < ActiveRecord::Base
     return user if user.password == User.encrypt(password, user.salt)
   end
 
+  def active_redemptions
+    (Redemption.where user_id: id, redeemed: false).count
+  end
+
   private
   def encrypt_password
     if self.new_record?

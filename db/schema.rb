@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150421224137) do
+ActiveRecord::Schema.define(version: 20150428044325) do
 
   create_table "auths", force: :cascade do |t|
     t.string   "token",      limit: 255
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20150421224137) do
     t.integer  "people_limit",    limit: 4
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.string   "picture",         limit: 255
   end
 
   create_table "redemptions", force: :cascade do |t|
@@ -77,6 +78,7 @@ ActiveRecord::Schema.define(version: 20150421224137) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.integer  "category_id", limit: 4
+    t.string   "logo",        limit: 255
   end
 
   create_table "users", force: :cascade do |t|

@@ -7,6 +7,8 @@ class Promo < ActiveRecord::Base
   validates :people_limit, presence: true
   validate :people_limit_correct_value
 
+  mount_uploader :picture, PromoPictureUploader
+
   has_and_belongs_to_many :branches
 
   def available_redemptions
@@ -18,6 +20,10 @@ class Promo < ActiveRecord::Base
     PromosHelper.current_time > expiration_date
   end
 
+  def store_logo
+    self.branches.first.store.logo.url(:small)
+  end
+
   def self.promos_available_by_branch_query(branch_id)
     "SELECT promos.id, title, description, terms, expiration_date,
             people_limit, promos.created_at, promos.updated_at,
@@ -25,7 +31,7 @@ class Promo < ActiveRecord::Base
             (SELECT COUNT(*)
              FROM redemptions
              WHERE redemptions.promo_id = promos.id)
-            AS `available_redemptions`
+            AS `available_redemptions`, promos.picture
     FROM promos
     LEFT OUTER JOIN branches_promos ON promos.id = branches_promos.promo_id
     LEFT OUTER JOIN branches ON branches_promos.branch_id = branches.id

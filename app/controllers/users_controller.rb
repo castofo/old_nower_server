@@ -64,10 +64,10 @@ class UsersController < ApplicationController
         redemptions: user.redemptions
       },
       except: [:promo_id, :created_at, :updated_at],
-      methods: [:store_name],
+      methods: [:store_name, :store_logo],
       include: {
         promo: {
-          only: [:id, :title, :expiration_date],
+          only: [:id, :title, :expiration_date, :picture],
           methods: [:available_redemptions]
         }
       }
