@@ -3,17 +3,17 @@ es:
   errors:
     user:
       wrong_email_or_password: "Dirección de correo o contraseña inválidos"
-      is_invalid: "El usuario es incorrecto"
+      is_invalid: "El usuario no existe"
       unauthorized: "No tienes acceso"
       gender:
         is_invalid: "El género es inválido (debe ser 'm' o 'f')"
       birthday:
         too_young: "Debes tener por lo menos 12 años de edad"
-        too_old: "La edad máxima 150 años"
+        too_old: "La edad máxima es 100 años"
     branch:
       already_exists: "La sucursal ya existe"
       not_selected: "No se han seleccionado sucursales"
-      some_are_invalid: "Ciertas de las sucursales proporcionadas son incorrectas"
+      some_are_invalid: "Alguna de las sucursales proporcionadas es incorrecta"
     store:
       is_invalid: "La tienda es incorrecta"
       wrong_email_or_password: "Dirección de correo o contraseña inválidos"
@@ -24,13 +24,13 @@ es:
       not_found: "Categoría no encontrada"
     promo:
       already_taken: "Ya tomaste esta promoción"
-      already_expired: "Esta promoción ya caducó"
+      already_expired: "Esta promoción ya expiró"
       no_more_stock: "Ya se agotaron las existencias para esta promoción"
       is_invalid: "La promoción es incorrecta"
       not_provided: "No se proporcionaron promociones"
-      some_are_invalid: "Ciertas de las promociones proporcionadas son incorrectas"
+      some_are_invalid: "Alguna de las promociones proporcionadas es incorrecta"
       expiration_date:
-        cannot_be_expired: "La promoción no puede estar vencida"
+        cannot_be_expired: "No puedes publicar promociones en el pasado"
       people_limit:
         is_negative: "El número de personas límite no puede ser negativo o cero"
     redemption:
@@ -47,13 +47,13 @@ es:
         user:
           attributes:
             email:
-              taken: "Este correo electrónico ya está tomado"
+              taken: "Este correo electrónico ya está en uso"
               blank: "El correo electrónico no puede estar vacío"
               invalid: "Correo electrónico incorrecto"
             name:
               blank: "El nombre no puede estar vacío"
             gender:
-              blank: "El género no puede estar vacío"
+              blank: "Debes seleccionar tu género"
             birthday:
               blank: "La fecha de nacimiento no puede estar vacía"
             password:
@@ -68,15 +68,19 @@ es:
             address:
               blank: "La dirección no puede estar vacía"
             latitude:
-              blank: "La latitud no puede estar vacía"
+              blank: "Debes seleccionar una latitud para la sucursal"
               not_a_number: "La latitud debe ser un número decimal"
-              greater_than_or_equal_to: "La latitud debe ser mayor o igual a %{count}"
-              less_than_or_equal_to: "La latitud debe ser menor o igual a %{count}"
+              greater_than_or_equal_to: "La latitud debe ser mayor o igual a "\
+                                        "%{count}"
+              less_than_or_equal_to: "La latitud debe ser menor o igual a "\
+                                     "%{count}"
             longitude:
-              blank: "La longitud no puede estar vacía"
+              blank: "Debes seleccionar una longitud para la sucursal"
               not_a_number: "La longitud debe ser un número decimal"
-              greater_than_or_equal_to: "La longitud debe ser mayor o igual a %{count}"
-              less_than_or_equal_to: "La longitud debe ser menor o igual a %{count}"
+              greater_than_or_equal_to: "La longitud debe ser mayor o igual a "\
+                                        "%{count}"
+              less_than_or_equal_to: "La longitud debe ser menor o igual a "\
+                                     "%{count}"
             phone:
               blank: "El número de teléfono no puede estar vacío"
             store_id:
@@ -109,7 +113,7 @@ es:
         store:
           attributes:
             email:
-              taken: "Este correo electrónico ya está tomado"
+              taken: "Este correo electrónico ya está en uso"
               blank: "El correo electrónico no puede estar vacío"
               invalid: "Correo electrónico incorrecto"
             name:
