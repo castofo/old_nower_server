@@ -25,7 +25,7 @@ class RedemptionsController < ApplicationController
       redemption.errors.add(:promo, I18n.t('errors.promo.already_expired'))
     end
     if promo && promo.available_redemptions == 0
-      redemption.errors.add(:promo, I18n.t('errors.promo.no_more_stock'))
+      redemption.errors.add(:promo_stock, I18n.t('errors.promo.no_more_stock'))
     end
     if !redemption.errors.any?
       # No errors, continue to create the redemption

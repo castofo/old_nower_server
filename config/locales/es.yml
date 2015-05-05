@@ -34,7 +34,7 @@ es:
       people_limit:
         is_negative: "El número de personas límite no puede ser negativo o cero"
     redemption:
-      limit_exceeded: "No puedes tomar más promociones hasta que redimas al menos una"
+      limit_exceeded: "No puedes tener más de 5 promociones sin redimir"
       invalid_code: "El código de promoción es incorrecto"
       already_redeemed: "Este código de promoción ya fue redimido"
   messages:

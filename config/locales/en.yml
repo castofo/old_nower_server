@@ -55,7 +55,7 @@ en:
       people_limit:
         is_negative: "The people limit can not be negative or zero"
     redemption:
-      limit_exceeded: "You can not take more promos until at least one is redeemed"
+      limit_exceeded: "You can't have more than 5 promos without having been redeemed"
       invalid_code: "The promo code is invalid"
       already_redeemed: "This promo code was already redeemed"
   messages:
