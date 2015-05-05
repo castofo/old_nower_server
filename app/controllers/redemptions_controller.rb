@@ -11,7 +11,7 @@ class RedemptionsController < ApplicationController
     if !promo
       redemption.errors.add(:promo_id, I18n.t('errors.promo.is_invalid'))
     end
-    redemption.errors.add(:user, I18n.t('errors.user.is_invalid')) if !user
+    redemption.errors.add(:user_id, I18n.t('errors.user.is_invalid')) if !user
     if user
       if promo && Redemption.find_by(user: user, promo: promo)
         redemption.errors.add(:promo, I18n.t('errors.promo.already_taken'))
