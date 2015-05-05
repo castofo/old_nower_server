@@ -59,3 +59,85 @@ en:
   messages:
     branch:
       deleted: "The branch has been successfully deleted"
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              taken: "This email was already taken"
+              blank: "Email can't be blank"
+              invalid: "Email is invalid"
+            name:
+              blank: "Name can't be blank"
+            gender:
+              blank: "Gender can't be blank"
+            birthday:
+              blank: "Birthday can't be blank"
+            password:
+              blank: "Password can't be blank"
+            password_confirmation:
+              blank: "Password confirmation can't be blank"
+              confirmation: "Passwords provided doesn't match"
+        branch:
+          attributes:
+            name:
+              blank: "Name can't be blank"
+            address:
+              blank: "Address can't be blank"
+            latitude:
+              blank: "Latitude can't be blank"
+              not_a_number: "Latitude should be a decimal number"
+              greater_than_or_equal_to: "Latitude should be greater than or equal to %{count}"
+              less_than_or_equal_to: "Latitude should be less than or equal to %{count}"
+            longitude:
+              blank: "Longitude can't be blank"
+              not_a_number: "Longitude should be a decimal number"
+              greater_than_or_equal_to: "Longitude should be greater than or equal to %{count}"
+              less_than_or_equal_to: "Longitude should be less than or equal to %{count}"
+            phone:
+              blank: "Phone number can't be blank"
+            store_id:
+              blank: "Store id can't be blank"
+        category:
+          attributes:
+            name:
+              blank: "Name can't be blank"
+        promo:
+          attributes:
+            title:
+              blank: "Title can't be blank"
+            description:
+              blank: "Description can't be blank"
+            terms:
+              blank: "Terms and conditions can't be blank"
+            expiration_date:
+              blank: "Expiration date can't be blank"
+            people_limit:
+              blank: "People limit can't be blank"
+        redemption:
+          attributes:
+            code:
+              blank: "Promo code can't be blank"
+              taken: "This promo code was already taken"
+            promo_id:
+              blank: "Promo id can't be blank"
+            user_id:
+              blank: "User id can't be blank"
+        store:
+          attributes:
+            email:
+              taken: "This email was already taken"
+              blank: "Email can't be blank"
+              invalid: "Email is invalid"
+            name:
+              blank: "Name can't be blank"
+            main_phone:
+              blank: "Main phone number can't be blank"
+            password:
+              blank: "Password can't be blank"
+            password_confirmation:
+              blank: "Password confirmation can't be blank"
+              confirmation: "Passwords provided doesn't match"
+            category_id:
+              blank: "Category id can't be blank"
