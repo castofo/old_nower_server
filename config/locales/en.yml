@@ -20,4 +20,132 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  # Custom messages
+  errors:
+    user:
+      wrong_email_or_password: "Wrong email or password"
+      is_invalid: "The user doesn't exist"
+      unauthorized: "You don't have access"
+      gender:
+        is_invalid: "The gender is invalid (should be 'm' o 'f')"
+      birthday:
+        too_young: "You should be 12 or older"
+        too_old: "The maximum age is 100"
+    branch:
+      already_exists: "The branch already exists"
+      not_selected: "No branch has been selected"
+      some_are_invalid: "One of the provided branches is invalid"
+    store:
+      is_invalid: "The store is invalid"
+      wrong_email_or_password: "Wrong email or password"
+    id:
+      is_invalid: "The id is invalid"
+    category:
+      is_invalid: "The category is invalid"
+      not_found: "Category not found"
+    promo:
+      already_taken: "This promo was already taken by you"
+      already_expired: "This promo has already expired"
+      no_more_stock: "This promo has no more stock"
+      is_invalid: "The promo is invalid"
+      not_provided: "Promos were not provided"
+      some_are_invalid: "One of the provided promos is invalid"
+      expiration_date:
+        cannot_be_expired: "You can't publish promos in the past"
+      people_limit:
+        is_negative: "The people limit can't be negative or zero"
+    redemption:
+      limit_exceeded: "You can't have more than 5 promos without having been
+                       redeemed"
+      invalid_code: "The promo code is invalid"
+      already_redeemed: "This promo code was already redeemed"
+  messages:
+    branch:
+      deleted: "The branch has been successfully deleted"
+  # Default messages used by Active Record
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              taken: "This email is already in use"
+              blank: "Email can't be blank"
+              invalid: "Email is invalid"
+            name:
+              blank: "Name can't be blank"
+            gender:
+              blank: "You have to select your gender"
+            birthday:
+              blank: "Birthday can't be blank"
+            password:
+              blank: "Password can't be blank"
+            password_confirmation:
+              blank: "Password confirmation can't be blank"
+              confirmation: "Provided passwords don't match"
+        branch:
+          attributes:
+            name:
+              blank: "Name can't be blank"
+            address:
+              blank: "Address can't be blank"
+            latitude:
+              blank: "You have to select a latitude for your branch"
+              not_a_number: "Latitude should be a decimal number"
+              greater_than_or_equal_to: "Latitude should be greater than or
+                                         equal to %{count}"
+              less_than_or_equal_to: "Latitude should be less than or equal
+                                      to %{count}"
+            longitude:
+              blank: "You have to select a longitude for your branch"
+              not_a_number: "Longitude should be a decimal number"
+              greater_than_or_equal_to: "Longitude should be greater than or
+                                         equal to %{count}"
+              less_than_or_equal_to: "Longitude should be less than or equal
+                                      to %{count}"
+            phone:
+              blank: "Phone number can't be blank"
+            store_id:
+              blank: "Store id can't be blank"
+        category:
+          attributes:
+            name:
+              blank: "Name can't be blank"
+        promo:
+          attributes:
+            title:
+              blank: "Title can't be blank"
+            description:
+              blank: "Description can't be blank"
+            terms:
+              blank: "Terms and conditions can't be blank"
+            expiration_date:
+              blank: "Expiration date can't be blank"
+            people_limit:
+              blank: "People limit can't be blank"
+        redemption:
+          attributes:
+            code:
+              blank: "Promo code can't be blank"
+              taken: "This promo code was already taken"
+            promo_id:
+              blank: "Promo id can't be blank"
+            user_id:
+              blank: "User id can't be blank"
+        store:
+          attributes:
+            email:
+              taken: "This email is already in use"
+              blank: "Email can't be blank"
+              invalid: "Email is invalid"
+            name:
+              blank: "Name can't be blank"
+            main_phone:
+              blank: "Main phone number can't be blank"
+            password:
+              blank: "Password can't be blank"
+            password_confirmation:
+              blank: "Password confirmation can't be blank"
+              confirmation: "Provided passwords don't match"
+            category_id:
+              blank: "Category id can't be blank"

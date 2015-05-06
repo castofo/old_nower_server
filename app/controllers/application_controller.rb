@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
       render json: {
         success: false,
         errors: {
-          login: ["You don't have access"]
+          login: [I18n.t('errors.user.unauthorized')]
         }
       },
       status: :unauthorized

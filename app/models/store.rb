@@ -1,8 +1,8 @@
 class Store < ActiveRecord::Base
   validates :email, presence: true, uniqueness: true,
-  format: {
-    with: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}/
-  }
+                    format: {
+                      with: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}/
+                    }
   validates :name, presence: true
   validates :main_phone, presence: true
   validates :password, presence: true, confirmation: true
@@ -10,6 +10,8 @@ class Store < ActiveRecord::Base
   validates :category_id, presence: true
   has_many :branches, dependent: :delete_all
   belongs_to :category
+
+  mount_uploader :logo, StoreLogoUploader
 
   before_save :encrypt_password
 

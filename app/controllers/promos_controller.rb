@@ -4,7 +4,7 @@ class PromosController < ApplicationController
     render json: {
       promos: Promo.all
     },
-    only: [:promos, :id, :title, :expiration_date],
+    only: [:promos, :id, :title, :expiration_date, :picture],
     methods: [:available_redemptions, :has_expired],
     include: {
         branches: {
@@ -23,7 +23,7 @@ class PromosController < ApplicationController
       methods: [:available_redemptions, :has_expired]
     else
       promo = Promo.new
-      promo.errors.add(:id, "was not found")
+      promo.errors.add(:id, I18n.t('errors.id.is_invalid'))
       render json: {
         success: false,
         errors: promo.errors
@@ -34,20 +34,25 @@ class PromosController < ApplicationController
 
   def create
     promo = Promo.new create_params
-    branches_json = create_params_branches[:branches]
+    branches = params.require(:promo).permit(:branches)
+    if branches[:branches] && branches[:branches].instance_of?(String)
+      branches_json = JSON.parse(branches[:branches])
+    else
+      branches_json = create_params_branches[:branches]
+    end
     if !branches_json
-      promo.errors.add(:branches, "were not selected")
+      promo.errors.add(:branches, I18n.t('errors.branch.not_selected'))
       status = :bad_request
     end
     arr = []
     if promo.errors.empty?
-      create_params_branches[:branches].each do | branch |
+      branches_json.each do | branch |
         arr.push(branch["id"])
       end
     end
     branches = Branch.where(id: arr)
     if branches.count != arr.count
-      promo.errors.add(:branches, "some provided branches are invalid")
+      promo.errors.add(:branches, I18n.t('errors.branch.some_are_invalid'))
       status = :unprocessable_entity
     end
     if promo.errors.empty?
@@ -70,11 +75,32 @@ class PromosController < ApplicationController
     status: status ? status : :unprocessable_entity
   end
 
+  def update
+    promo = Promo.find_by id: update_params[:id]
+    if !promo
+      promo = Promo.new
+      promo.errors.add(:id, I18n.t('errors.id.is_invalid'))
+      status = :bad_request
+    elsif promo.errors.empty? && promo.update_attributes(update_params)
+      render json: {
+        success: true,
+        promo: promo
+      },
+      except: [:created_at, :updated_at]
+      return # Keep this to avoid double render
+    end
+    render json: {
+      success: false,
+      errors: promo.errors
+    },
+    status: status ? status : :unprocessable_entity
+  end
+
   def fetch_promos
     promos_json = fetch_promos_params[:promos]
     promo = Promo.new
     if !promos_json
-      promo.errors.add(:ids, "were not provided")
+      promo.errors.add(:promos, I18n.t('errors.promo.not_provided'))
       status = :bad_request
     end
     if promo.errors.empty?
@@ -84,7 +110,7 @@ class PromosController < ApplicationController
       end
       promos = Promo.where id: promo_ids.to_a
       if promos.count == 0
-        promo.errors.add(:ids, "were not found")
+        promo.errors.add(:promos, I18n.t('errors.promo.some_are_invalid'))
         status = :unprocessable_entity
       end
       if promo.errors.empty?
@@ -92,7 +118,7 @@ class PromosController < ApplicationController
           promos: promos
         },
         except: [:created_at, :updated_at],
-        methods: [:available_redemptions, :has_expired]
+        methods: [:available_redemptions, :has_expired, :store_logo]
         return # Keep this to avoid double render
       end
     end
@@ -106,11 +132,16 @@ class PromosController < ApplicationController
   private
   def create_params
     params.require(:promo).permit(:title, :description, :terms,
-                                  :expiration_date, :people_limit)
+                                  :expiration_date, :people_limit, :picture)
   end
 
   def create_params_branches
     params.require(:promo).permit(branches: [:id])
+  end
+
+  def update_params
+    params.require(:promo).permit(:id, :title, :description, :terms,
+                                  :expiration_date, :people_limit, :picture)
   end
 
   def fetch_promos_params

@@ -50,7 +50,7 @@ class UsersController < ApplicationController
       render json: {
         success: false,
         errors: {
-          login: ["Wrong email or password"]
+          login: [I18n.translate('errors.user.wrong_email_or_password')]
         }
       },
       status: :bad_request
@@ -64,17 +64,17 @@ class UsersController < ApplicationController
         redemptions: user.redemptions
       },
       except: [:promo_id, :created_at, :updated_at],
-      methods: [:store_name],
+      methods: [:store_name, :store_logo],
       include: {
         promo: {
-          only: [:id, :title, :expiration_date],
+          only: [:id, :title, :expiration_date, :picture],
           methods: [:available_redemptions]
         }
       }
     else
       render json: {
         errors: {
-          user: ["is invalid"]
+          user: [I18n.translate('errors.user.is_invalid')]
         }
       },
       status: :unauthorized

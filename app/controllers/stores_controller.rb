@@ -16,7 +16,9 @@ class StoresController < ApplicationController
   def create
     store = Store.new create_params
     category = Category.find_by id: create_params[:category_id]
-    store.errors.add(:category, "is invalid") if !category
+    if !category
+      store.errors.add(:category, I18n.t('errors.category.is_invalid'))
+    end
     if store.errors.empty? && store.save
       render json: {
         success: true,
@@ -36,6 +38,27 @@ class StoresController < ApplicationController
       errors: store.errors
     },
     status: :unprocessable_entity
+  end
+
+  def update
+    store = Store.find_by id: update_params[:id]
+    if !store
+      store = Store.new
+      store.errors.add(:id, I18n.t('errors.id.is_invalid'))
+      status = :bad_request
+    elsif store.errors.empty? && store.update_attributes(update_params)
+      render json: {
+        success: true,
+        store: store
+      },
+      except: [:created_at, :updated_at]
+      return # Keep this to avoid double render
+    end
+    render json: {
+      success: false,
+      errors: store.errors
+    },
+    status: status ? status : :unprocessable_entity
   end
 
   def show
@@ -66,7 +89,7 @@ class StoresController < ApplicationController
       render json: {
         success: false,
         errors: {
-          login: ["Wrong email or password"]
+          login: [I18n.t('errors.store.wrong_email_or_password')]
         }
       },
       status: :bad_request
@@ -83,7 +106,7 @@ class StoresController < ApplicationController
     else
       render json: {
         errors: {
-          store: ["is invalid"]
+          store: [I18n.t('errors.store.is_invalid')]
         }
       },
       status: :unauthorized
@@ -93,7 +116,12 @@ class StoresController < ApplicationController
   private
   def create_params
     params.require(:store).permit(:email, :name, :main_phone, :password,
-                                  :password_confirmation, :category_id)
+                                  :password_confirmation, :category_id, :logo)
+  end
+
+  def update_params
+    params.require(:store).permit(:id, :email, :name, :main_phone, :password,
+                                  :password_confirmation, :category_id, :logo)
   end
 
   def login_params

@@ -1,0 +1,129 @@
+es:
+  # Custom messages
+  errors:
+    user:
+      wrong_email_or_password: "Dirección de correo o contraseña inválidos"
+      is_invalid: "El usuario no existe"
+      unauthorized: "No tienes acceso"
+      gender:
+        is_invalid: "El género es inválido (debe ser 'm' o 'f')"
+      birthday:
+        too_young: "Debes tener por lo menos 12 años de edad"
+        too_old: "La edad máxima es 100 años"
+    branch:
+      already_exists: "La sucursal ya existe"
+      not_selected: "No se han seleccionado sucursales"
+      some_are_invalid: "Alguna de las sucursales proporcionadas es incorrecta"
+    store:
+      is_invalid: "La tienda es incorrecta"
+      wrong_email_or_password: "Dirección de correo o contraseña inválidos"
+    id:
+      is_invalid: "El id es incorrecto"
+    category:
+      is_invalid: "La categoría es incorrecta"
+      not_found: "Categoría no encontrada"
+    promo:
+      already_taken: "Ya tomaste esta promoción"
+      already_expired: "Esta promoción ya expiró"
+      no_more_stock: "Ya se agotaron las existencias para esta promoción"
+      is_invalid: "La promoción es incorrecta"
+      not_provided: "No se proporcionaron promociones"
+      some_are_invalid: "Alguna de las promociones proporcionadas es incorrecta"
+      expiration_date:
+        cannot_be_expired: "No puedes publicar promociones en el pasado"
+      people_limit:
+        is_negative: "El número de personas límite no puede ser negativo o cero"
+    redemption:
+      limit_exceeded: "No puedes tener más de 5 promociones sin redimir"
+      invalid_code: "El código de promoción es incorrecto"
+      already_redeemed: "Este código de promoción ya fue redimido"
+  messages:
+    branch:
+      deleted: "La sucursal ha sido borrada satisfactoriamente"
+  # Default messages used by Active Record
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              taken: "Este correo electrónico ya está en uso"
+              blank: "El correo electrónico no puede estar vacío"
+              invalid: "Correo electrónico incorrecto"
+            name:
+              blank: "El nombre no puede estar vacío"
+            gender:
+              blank: "Debes seleccionar tu género"
+            birthday:
+              blank: "La fecha de nacimiento no puede estar vacía"
+            password:
+              blank: "La contraseña no puede estar vacía"
+            password_confirmation:
+              blank: "La confirmación de contraseña no puede estar vacía"
+              confirmation: "Las contraseñas proporcionadas no coinciden"
+        branch:
+          attributes:
+            name:
+              blank: "El nombre no puede estar vacío"
+            address:
+              blank: "La dirección no puede estar vacía"
+            latitude:
+              blank: "Debes seleccionar una latitud para la sucursal"
+              not_a_number: "La latitud debe ser un número decimal"
+              greater_than_or_equal_to: "La latitud debe ser mayor o igual a
+                                         %{count}"
+              less_than_or_equal_to: "La latitud debe ser menor o igual a
+                                      %{count}"
+            longitude:
+              blank: "Debes seleccionar una longitud para la sucursal"
+              not_a_number: "La longitud debe ser un número decimal"
+              greater_than_or_equal_to: "La longitud debe ser mayor o igual a
+                                         %{count}"
+              less_than_or_equal_to: "La longitud debe ser menor o igual a
+                                      %{count}"
+            phone:
+              blank: "El número de teléfono no puede estar vacío"
+            store_id:
+              blank: "El id de la tienda no puede estar vacío"
+        category:
+          attributes:
+            name:
+              blank: "El nombre no puede estar vacío"
+        promo:
+          attributes:
+            title:
+              blank: "El título no puede estar vacío"
+            description:
+              blank: "La descripción no puede estar vacía"
+            terms:
+              blank: "Los términos y condiciones no pueden estar vacíos"
+            expiration_date:
+              blank: "La fecha de expiración no puede estar vacía"
+            people_limit:
+              blank: "El límite de personas no puede estar vacío"
+        redemption:
+          attributes:
+            code:
+              blank: "El código de promoción no puede estar vacío"
+              taken: "Este código ya está asociado a un usuario y promoción"
+            promo_id:
+              blank: "El id de la promoción no puede estar vacío"
+            user_id:
+              blank: "El id del usuario no puede estar vacío"
+        store:
+          attributes:
+            email:
+              taken: "Este correo electrónico ya está en uso"
+              blank: "El correo electrónico no puede estar vacío"
+              invalid: "Correo electrónico incorrecto"
+            name:
+              blank: "El nombre no puede estar vacío"
+            main_phone:
+              blank: "El número de teléfono principal no puede estar vacío"
+            password:
+              blank: "La contraseña no puede estar vacía"
+            password_confirmation:
+              blank: "La confirmación de contraseña no puede estar vacía"
+              confirmation: "Las contraseñas proporcionadas no coinciden"
+            category_id:
+              blank: "El id de la categoría no puede estar vacío"

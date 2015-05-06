@@ -11,7 +11,8 @@ describe Redemption do
 
       it "should add the correct error message" do
         redemption.valid?
-        expect(redemption.errors.messages[:code]).to include("can't be blank")
+        expect(redemption.errors.messages[:code]).to include(
+          I18n.t('activerecord.errors.models.redemption.attributes.code.blank'))
       end
     end
 
@@ -20,7 +21,8 @@ describe Redemption do
 
       it "should add the correct error message" do
         rede = Redemption.create code: "ABCDEF", user_id: 1338, promo_id: 1338
-        expect(rede.errors.messages[:code]).to include("has already been taken")
+        expect(rede.errors.messages[:code]).to include(
+          I18n.t('activerecord.errors.models.redemption.attributes.code.taken'))
         rede.destroy
         first.destroy
       end
@@ -34,8 +36,9 @@ describe Redemption do
 
       it "should add the correct error message" do
         redemption.valid?
-        message = "can't be blank"
-        expect(redemption.errors.messages[:promo_id]).to include(message)
+        expect(redemption.errors.messages[:promo_id]).to include(
+          I18n.t('activerecord.errors.models.redemption.attributes.promo_id.'\
+                 'blank'))
       end
     end
 
@@ -47,8 +50,9 @@ describe Redemption do
 
       it "should add the correct error message" do
         redemption.valid?
-        message = "can't be blank"
-        expect(redemption.errors.messages[:user_id]).to include(message)
+        expect(redemption.errors.messages[:user_id]).to include(
+          I18n.t('activerecord.errors.models.redemption.attributes.user_id'\
+                 '.blank'))
       end
     end
   end

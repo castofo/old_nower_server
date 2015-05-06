@@ -10,7 +10,8 @@ describe User do
       end
       it "should add the correct error message" do
         user.valid?
-        expect(user.errors.messages[:email]).to include("can't be blank")
+        expect(user.errors.messages[:email]).to include(
+          I18n.t('activerecord.errors.models.user.attributes.email.blank'))
       end
     end
 
@@ -21,8 +22,8 @@ describe User do
 
       it "should add the correct error message" do
         user = User.create email: "test1@gmail.com"
-        message = "has already been taken"
-        expect(user.errors.messages[:email]).to include(message)
+        expect(user.errors.messages[:email]).to include(
+          I18n.t('activerecord.errors.models.user.attributes.email.taken'))
         user.destroy
         first.destroy
       end
@@ -36,7 +37,8 @@ describe User do
       end
       it "should add the correct error message" do
         user.valid?
-        expect(user.errors.messages[:email]).to include("is invalid")
+        expect(user.errors.messages[:email]).to include(
+          I18n.t('activerecord.errors.models.user.attributes.email.invalid'))
       end
     end
 
@@ -48,7 +50,8 @@ describe User do
 
       it "should add the correct error message" do
         user.valid?
-        expect(user.errors.messages[:name]).to include("can't be blank")
+        expect(user.errors.messages[:name]).to include(
+          I18n.t('activerecord.errors.models.user.attributes.name.blank'))
       end
     end
 
@@ -60,7 +63,8 @@ describe User do
 
       it "should add the correct error message" do
         user.valid?
-        expect(user.errors.messages[:gender]).to include("can't be blank")
+        expect(user.errors.messages[:gender]).to include(
+          I18n.t('activerecord.errors.models.user.attributes.gender.blank'))
       end
     end
 
@@ -70,7 +74,8 @@ describe User do
 
       it "should add the correct error message" do
         user.valid?
-        expect(user.errors.messages[:gender]).to include("is invalid (m or f)")
+        expect(user.errors.messages[:gender]).to include(
+          I18n.t('errors.user.gender.is_invalid'))
       end
     end
 
@@ -82,7 +87,8 @@ describe User do
 
       it "should add the correct error message" do
         user.valid?
-        expect(user.errors.messages[:birthday]).to include("can't be blank")
+        expect(user.errors.messages[:birthday]).to include(
+          I18n.t('activerecord.errors.models.user.attributes.birthday.blank'))
       end
     end
 
@@ -95,7 +101,8 @@ describe User do
 
       it "should add the correct error message" do
         user.valid?
-        expect(user.errors.messages[:birthday]).to include("minimum age is 12")
+        expect(user.errors.messages[:birthday]).to include(
+          I18n.t('errors.user.birthday.too_young'))
       end
     end
 
@@ -108,7 +115,8 @@ describe User do
 
       it "should add the correct error message" do
         user.valid?
-        expect(user.errors.messages[:birthday]).to include("maximum age is 150")
+        expect(user.errors.messages[:birthday]).to include(
+          I18n.t('errors.user.birthday.too_old'))
       end
     end
 
@@ -120,7 +128,8 @@ describe User do
 
       it "should add the correct error message" do
         user.valid?
-        expect(user.errors.messages[:password]).to include("can't be blank")
+        expect(user.errors.messages[:password]).to include(
+          I18n.t('activerecord.errors.models.user.attributes.password.blank'))
       end
     end
 
@@ -133,8 +142,9 @@ describe User do
 
       it "should add the correct error message" do
         user.valid?
-        message = "can't be blank"
-        expect(user.errors.messages[:password_confirmation]).to include(message)
+        expect(user.errors.messages[:password_confirmation]).to include(
+          I18n.t('activerecord.errors.models.user.attributes.'\
+                 'password_confirmation.blank'))
       end
     end
 
@@ -148,8 +158,9 @@ describe User do
         usr2.password = "12345"
         usr2.password_confirmation = "12345678910"
         usr2.save
-        message = "doesn't match Password"
-        expect(usr2.errors.messages[:password_confirmation]).to include(message)
+        expect(usr2.errors.messages[:password_confirmation]).to include(
+          I18n.t('activerecord.errors.models.user.attributes.'\
+                 'password_confirmation.confirmation'))
         usr1.destroy
         usr2.destroy
       end

@@ -8,6 +8,24 @@ class CategoriesController < ApplicationController
     only: [:categories, :id, :name]
   end
 
+  def create
+    category = Category.new create_params
+    if category.save
+      render json: {
+        success: true,
+        store: category
+      },
+      except: [:created_at, :updated_at],
+      status: :created
+      return # Keep this to avoid double render
+    end
+    render json: {
+      success: false,
+      errors: cateogory.errors
+    },
+    status: :unprocessable_entity
+  end
+
   def show
     category = Category.find_by id: params[:id]
     if category
@@ -18,10 +36,15 @@ class CategoriesController < ApplicationController
     else
       render json: {
         errors: {
-          category: ["not found"]
+          category: [I18n.t('errors.category.not_found')]
         }
       },
       status: :not_found
     end
+  end
+
+  private
+  def create_params
+    params.require(:category).permit(:name, :description)
   end
 end
