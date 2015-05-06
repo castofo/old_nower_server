@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
     unless birthday <= 12.years.ago
       errors.add(:birthday, I18n.t('errors.user.birthday.too_young'))
     end
-    unless birthday >= 150.years.ago
+    unless birthday >= 100.years.ago
       errors.add(:birthday, I18n.t('errors.user.birthday.too_old'))
     end
   end
