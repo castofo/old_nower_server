@@ -11,7 +11,8 @@ describe Promo do
 
       it "should add the correct error message" do
         promo.valid?
-        expect(promo.errors.messages[:title]).to include("can't be blank")
+        expect(promo.errors.messages[:title]).to include(
+          I18n.t('activerecord.errors.models.promo.attributes.title.blank'))
       end
     end
 
@@ -23,7 +24,9 @@ describe Promo do
 
       it "should add the correct error message" do
         promo.valid?
-        expect(promo.errors.messages[:description]).to include("can't be blank")
+        expect(promo.errors.messages[:description]).to include(
+          I18n.t('activerecord.errors.models.promo.attributes.description'\
+                 '.blank'))
       end
     end
 
@@ -35,7 +38,8 @@ describe Promo do
 
       it "should add the correct error message" do
         promo.valid?
-        expect(promo.errors.messages[:terms]).to include("can't be blank")
+        expect(promo.errors.messages[:terms]).to include(
+          I18n.t('activerecord.errors.models.promo.attributes.terms.blank'))
       end
     end
 
@@ -47,8 +51,9 @@ describe Promo do
 
       it "should add the correct error message" do
         promo.valid?
-        message = "can't be blank"
-        expect(promo.errors.messages[:expiration_date]).to include(message)
+        expect(promo.errors.messages[:expiration_date]).to include(
+          I18n.t('activerecord.errors.models.promo.attributes.expiration_date'\
+                 '.blank'))
       end
     end
 
@@ -61,8 +66,8 @@ describe Promo do
 
       it "should add the correct error message" do
         promo.valid?
-        message = "can not be expired"
-        expect(promo.errors.messages[:expiration_date]).to include(message)
+        expect(promo.errors.messages[:expiration_date]).to include(
+          I18n.t('errors.promo.expiration_date.cannot_be_expired'))
       end
     end
 
@@ -74,8 +79,9 @@ describe Promo do
 
       it "should add the correct error message" do
         promo.valid?
-        message = "can't be blank"
-        expect(promo.errors.messages[:people_limit]).to include(message)
+        expect(promo.errors.messages[:people_limit]).to include(
+          I18n.t('activerecord.errors.models.promo.attributes.people_limit'\
+                 '.blank'))
       end
     end
 
@@ -88,8 +94,8 @@ describe Promo do
 
       it "should add the correct error message" do
         promo.valid?
-        message = "can not be negative or zero"
-        expect(promo.errors.messages[:people_limit]).to include(message)
+        expect(promo.errors.messages[:people_limit]).to include(
+          I18n.t('errors.promo.people_limit.is_negative'))
       end
     end
   end

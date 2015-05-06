@@ -10,7 +10,8 @@ describe Store do
       end
       it "should add the correct error message" do
         store.valid?
-        expect(store.errors.messages[:email]).to include("can't be blank")
+        expect(store.errors.messages[:email]).to include(
+          I18n.t('activerecord.errors.models.store.attributes.email.blank'))
       end
     end
 
@@ -21,8 +22,8 @@ describe Store do
 
       it "should add the correct error message" do
         store = Store.create email: "test1@gmail.com"
-        message = "has already been taken"
-        expect(store.errors.messages[:email]).to include(message)
+        expect(store.errors.messages[:email]).to include(
+          I18n.t('activerecord.errors.models.store.attributes.email.taken'))
         store.destroy
         first.destroy
       end
@@ -36,7 +37,8 @@ describe Store do
       end
       it "should add the correct error message" do
         store.valid?
-        expect(store.errors.messages[:email]).to include("is invalid")
+        expect(store.errors.messages[:email]).to include(
+          I18n.t('activerecord.errors.models.store.attributes.email.invalid'))
       end
     end
 
@@ -48,7 +50,8 @@ describe Store do
 
       it "should add the correct error message" do
         store.valid?
-        expect(store.errors.messages[:name]).to include("can't be blank")
+        expect(store.errors.messages[:name]).to include(
+          I18n.t('activerecord.errors.models.store.attributes.name.blank'))
       end
     end
 
@@ -60,7 +63,9 @@ describe Store do
 
       it "should add the correct error message" do
         store.valid?
-        expect(store.errors.messages[:main_phone]).to include("can't be blank")
+        expect(store.errors.messages[:main_phone]).to include(
+          I18n.t('activerecord.errors.models.store.attributes.main_phone'\
+                 '.blank'))
       end
     end
 
@@ -72,7 +77,8 @@ describe Store do
 
       it "should add the correct error message" do
         store.valid?
-        expect(store.errors.messages[:password]).to include("can't be blank")
+        expect(store.errors.messages[:password]).to include(
+          I18n.t('activerecord.errors.models.store.attributes.password.blank'))
       end
     end
 
@@ -85,8 +91,9 @@ describe Store do
 
       it "should add the correct error message" do
         store.valid?
-        message = "can't be blank"
-        expect(store.errors.messages[:password_confirmation]).to include(message)
+        expect(store.errors.messages[:password_confirmation]).to include(
+          I18n.t('activerecord.errors.models.store.attributes.'\
+                 'password_confirmation.blank'))
       end
     end
 
@@ -100,8 +107,9 @@ describe Store do
         store.password = "12345"
         store.password_confirmation = "12345678910"
         store.save
-        msg = "doesn't match Password"
-        expect(store.errors.messages[:password_confirmation]).to include(msg)
+        expect(store.errors.messages[:password_confirmation]).to include(
+          I18n.t('activerecord.errors.models.store.attributes.'\
+                 'password_confirmation.confirmation'))
         first.destroy
         store.destroy
       end
