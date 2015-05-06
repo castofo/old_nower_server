@@ -55,8 +55,8 @@ en:
       people_limit:
         is_negative: "The people limit can't be negative or zero"
     redemption:
-      limit_exceeded: "You can't have more than 5 promos without having been "\
-                      "redeemed"
+      limit_exceeded: "You can't have more than 5 promos without having been
+                       redeemed"
       invalid_code: "The promo code is invalid"
       already_redeemed: "This promo code was already redeemed"
   messages:
@@ -92,17 +92,17 @@ en:
             latitude:
               blank: "You have to select a latitude for your branch"
               not_a_number: "Latitude should be a decimal number"
-              greater_than_or_equal_to: "Latitude should be greater than or"\
-                                        "equal to %{count}"
-              less_than_or_equal_to: "Latitude should be less than or equal "\
-                                     "to %{count}"
+              greater_than_or_equal_to: "Latitude should be greater than or
+                                         equal to %{count}"
+              less_than_or_equal_to: "Latitude should be less than or equal
+                                      to %{count}"
             longitude:
               blank: "You have to select a longitude for your branch"
               not_a_number: "Longitude should be a decimal number"
-              greater_than_or_equal_to: "Longitude should be greater than or "\
-                                        "equal to %{count}"
-              less_than_or_equal_to: "Longitude should be less than or equal "\
-                                     "to %{count}"
+              greater_than_or_equal_to: "Longitude should be greater than or
+                                         equal to %{count}"
+              less_than_or_equal_to: "Longitude should be less than or equal
+                                      to %{count}"
             phone:
               blank: "Phone number can't be blank"
             store_id:

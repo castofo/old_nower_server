@@ -70,17 +70,17 @@ es:
             latitude:
               blank: "Debes seleccionar una latitud para la sucursal"
               not_a_number: "La latitud debe ser un número decimal"
-              greater_than_or_equal_to: "La latitud debe ser mayor o igual a "\
-                                        "%{count}"
-              less_than_or_equal_to: "La latitud debe ser menor o igual a "\
-                                     "%{count}"
+              greater_than_or_equal_to: "La latitud debe ser mayor o igual a
+                                         %{count}"
+              less_than_or_equal_to: "La latitud debe ser menor o igual a
+                                      %{count}"
             longitude:
               blank: "Debes seleccionar una longitud para la sucursal"
               not_a_number: "La longitud debe ser un número decimal"
-              greater_than_or_equal_to: "La longitud debe ser mayor o igual a "\
-                                        "%{count}"
-              less_than_or_equal_to: "La longitud debe ser menor o igual a "\
-                                     "%{count}"
+              greater_than_or_equal_to: "La longitud debe ser mayor o igual a
+                                         %{count}"
+              less_than_or_equal_to: "La longitud debe ser menor o igual a
+                                      %{count}"
             phone:
               blank: "El número de teléfono no puede estar vacío"
             store_id:
