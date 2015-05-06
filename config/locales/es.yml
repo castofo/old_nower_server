@@ -127,3 +127,15 @@ es:
               confirmation: "Las contraseñas proporcionadas no coinciden"
             category_id:
               blank: "El id de la categoría no puede estar vacío"
+        facebook_auth:
+          attributes:
+            token:
+              blank: "El token de autenticación no puede estar vacío"
+            facebook_id:
+              blank: "El id de Facebook no puede estar vacío"
+              taken: "Este id de Facebook ya está en uso"
+            expires:
+              blank: "La expiración del token no puede estar vacía"
+            user_id:
+              blank: "El id del usuario no puede estar vacío"
+              taken: "Este id de usuario ya está en uso"

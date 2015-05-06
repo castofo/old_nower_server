@@ -8,10 +8,12 @@ class User < ActiveRecord::Base
   validate :gender_correct_value
   validates :birthday, presence: true
   validate :birthday_correct_value
-  validates :password, presence: true, confirmation: true
+  #validates :password, presence: true
+  validates :password, confirmation: true
   validates_presence_of :password_confirmation, if: :password_changed?
 
   has_many :redemptions
+  has_one :facebook_auth, dependent: :delete
 
   before_save :encrypt_password
 
