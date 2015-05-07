@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150428044325) do
+ActiveRecord::Schema.define(version: 20150506153125) do
 
   create_table "auths", force: :cascade do |t|
     t.string   "token",      limit: 255
@@ -45,6 +45,15 @@ ActiveRecord::Schema.define(version: 20150428044325) do
   create_table "categories", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  create_table "facebook_auths", force: :cascade do |t|
+    t.string   "token",       limit: 255
+    t.string   "facebook_id", limit: 255
+    t.datetime "expires"
+    t.integer  "user_id",     limit: 4
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end

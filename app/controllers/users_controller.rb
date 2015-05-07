@@ -57,6 +57,53 @@ class UsersController < ApplicationController
     end
   end
 
+  def facebook_login
+    fb_auth = FacebookAuth.new
+    fb_auth.attributes = facebook_login_params.reject do |key, value|
+      !fb_auth.attributes.keys.member? key.to_s
+    end
+    existing_auth = FacebookAuth.find_by facebook_id: fb_auth.facebook_id
+    if existing_auth
+      # The user was already registered
+      # TODO Some authentication process
+      existing_auth.token = fb_auth.token
+      existing_auth.expires = fb_auth.expires
+      existing_auth.save
+      fb_auth = existing_auth
+      user = fb_auth.user
+      status = :ok
+    else
+      # Create a new user and associate it with the token
+      user = User.new
+      user.attributes = facebook_login_params.reject do |key, value|
+        !user.attributes.keys.member? key.to_s
+      end
+      # Only the first character of the string
+      user.gender = user.gender[0]
+      # Suppose the user birthday as maximum years ago
+      user.birthday = facebook_login_params[:age_range][:max].years.ago
+      if user.save
+        status = :created
+        fb_auth.user = user
+        # TODO Some authentication process
+        user.destroy unless fb_auth.save
+      end
+    end
+    if fb_auth.errors.empty? && user.errors.empty?
+      render json: {
+        success: true,
+        user: user
+      },
+      status: status
+    else
+      render json: {
+        success: false,
+        errors: user.errors.any? ? user.errors : fb_auth.errors
+      },
+      status: :bad_request
+    end
+  end
+
   def get_redemptions
     user = User.find_by id: params[:id]
     if user
@@ -89,5 +136,10 @@ class UsersController < ApplicationController
 
   def login_params
     params.require(:user).permit(:email, :password).merge(user_type: "user")
+  end
+
+  def facebook_login_params
+    params.require(:user).permit(:email, :name, :gender, :token, :facebook_id,
+      :expires, age_range: [:min, :max])
   end
 end

@@ -149,3 +149,15 @@ en:
               confirmation: "Provided passwords don't match"
             category_id:
               blank: "Category id can't be blank"
+        facebook_auth:
+          attributes:
+            token:
+              blank: "Authentication token can't be blank"
+            facebook_id:
+              blank: "Facebook id can't be blank"
+              taken: "This facebook id is already in use"
+            expires:
+              blank: "Token expiration can't be blank"
+            user_id:
+              blank: "User id can't be blank"
+              taken: "This user id is already in use"

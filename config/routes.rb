@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
   post 'stores/login', to: 'stores#login'
   post 'users/login', to: 'users#login'
+  post 'users/login/facebook', to: 'users#facebook_login'
 
   post 'promo/now', to: 'redemptions#generate_code'
   post 'promos/details', to: 'promos#fetch_promos'
