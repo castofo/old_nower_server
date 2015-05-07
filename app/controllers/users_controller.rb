@@ -81,7 +81,12 @@ class UsersController < ApplicationController
       # Only the first character of the string
       user.gender = user.gender[0]
       # Suppose the user birthday as maximum years ago
-      user.birthday = facebook_login_params[:age_range][:max].years.ago
+      if facebook_login_params[:age_range][:max]
+        user.birthday = facebook_login_params[:age_range][:max].years.ago
+      # If maximum doesn't exist, try with minimum
+      elsif facebook_login_params[:age_range][:min]
+        user.birthday = facebook_login_params[:age_range][:min].years.ago
+      end
       if user.save
         status = :created
         fb_auth.user = user
