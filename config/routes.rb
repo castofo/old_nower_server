@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'categories', to: 'categories#index'
 
   get 'promos/:id', to: 'promos#show'
+  get 'promos/store/:id', to: 'promos#get_by_store'
   get 'stores/:id', to: 'stores#show'
   get 'users/:id', to: 'users#show'
   get 'user/redemptions/:id', to: 'users#get_redemptions'

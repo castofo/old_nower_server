@@ -20,7 +20,12 @@ class PromosController < ApplicationController
         promo: promo
       },
       except: [:created_at, :updated_at],
-      methods: [:available_redemptions, :has_expired]
+      methods: [:available_redemptions, :has_expired],
+      include: {
+        branches: {
+          except: [:created_at, :updated_at]  
+        }
+      }
     else
       promo = Promo.new
       promo.errors.add(:id, I18n.t('errors.id.is_invalid'))
@@ -127,6 +132,26 @@ class PromosController < ApplicationController
       errors: promo.errors
     },
     status: status ? status : :unprocessable_entity
+  end
+
+  def get_by_store
+    store_id = params[:id]
+    filtered_promos = Set.new
+    Promo.all.each do | promo |
+      if promo.branches.any? && promo.branches.first.store_id == store_id.to_i
+        filtered_promos.add(promo)
+      end
+    end
+    render json: {
+      promos: filtered_promos
+    },
+    only: [:promos, :branches, :name, :id, :title, :description,
+           :expiration_date, :people_limit],
+    include: {
+      branches: {
+        only: [:id, :name]
+      }
+    }
   end
 
   private
