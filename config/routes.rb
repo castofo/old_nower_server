@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   patch 'promos', to: 'promos#update'
 
   delete 'branches/:id', to: 'branches#destroy'
+  delete 'promos/:id', to: 'promos#destroy'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

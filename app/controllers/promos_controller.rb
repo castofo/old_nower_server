@@ -23,7 +23,7 @@ class PromosController < ApplicationController
       methods: [:available_redemptions, :has_expired],
       include: {
         branches: {
-          except: [:created_at, :updated_at]  
+          except: [:created_at, :updated_at]
         }
       }
     else
@@ -92,6 +92,29 @@ class PromosController < ApplicationController
         promo: promo
       },
       except: [:created_at, :updated_at]
+      return # Keep this to avoid double render
+    end
+    render json: {
+      success: false,
+      errors: promo.errors
+    },
+    status: status ? status : :unprocessable_entity
+  end
+
+  def destroy
+    promo = Promo.find_by id: params[:id]
+    if !promo
+      promo = Branch.new
+      promo.errors.add(:id, I18n.t('errors.id.is_invalid'))
+      status = :bad_request
+    else
+      promo.destroy
+      render json: {
+        success: true,
+        message: {
+          promo: [I18n.t('messages.promo.deleted')]
+        }
+      }
       return # Keep this to avoid double render
     end
     render json: {
