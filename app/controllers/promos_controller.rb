@@ -20,7 +20,12 @@ class PromosController < ApplicationController
         promo: promo
       },
       except: [:created_at, :updated_at],
-      methods: [:available_redemptions, :has_expired]
+      methods: [:available_redemptions, :has_expired],
+      include: {
+        branches: {
+          except: [:created_at, :updated_at]
+        }
+      }
     else
       promo = Promo.new
       promo.errors.add(:id, I18n.t('errors.id.is_invalid'))
@@ -33,35 +38,15 @@ class PromosController < ApplicationController
   end
 
   def create
-    promo = Promo.new create_params
-    branches = params.require(:promo).permit(:branches)
-    if branches[:branches] && branches[:branches].instance_of?(String)
-      branches_json = JSON.parse(branches[:branches])
-    else
-      branches_json = create_params_branches[:branches]
-    end
-    if !branches_json
-      promo.errors.add(:branches, I18n.t('errors.branch.not_selected'))
-      status = :bad_request
-    end
-    arr = []
-    if promo.errors.empty?
-      branches_json.each do | branch |
-        arr.push(branch["id"])
-      end
-    end
-    branches = Branch.where(id: arr)
-    if branches.count != arr.count
-      promo.errors.add(:branches, I18n.t('errors.branch.some_are_invalid'))
-      status = :unprocessable_entity
-    end
-    if promo.errors.empty?
-      promo.branches = branches
-      if promo.save
+    @promo = Promo.new create_params
+    setup_branches
+    if @promo.errors.empty?
+      @promo.branches = @branches
+      if @promo.save
         render json: {
           success: true,
-          promo: promo,
-          branches: promo.branches
+          promo: @promo,
+          branches: @promo.branches
         },
         except: [:created_at, :updated_at],
         status: :created
@@ -70,23 +55,49 @@ class PromosController < ApplicationController
     end
     render json: {
       success: false,
-      errors: promo.errors
+      errors: @promo.errors
     },
-    status: status ? status : :unprocessable_entity
+    status: @status ? @status : :unprocessable_entity
   end
 
   def update
-    promo = Promo.find_by id: update_params[:id]
-    if !promo
-      promo = Promo.new
-      promo.errors.add(:id, I18n.t('errors.id.is_invalid'))
-      status = :bad_request
-    elsif promo.errors.empty? && promo.update_attributes(update_params)
+    @promo = Promo.find_by id: update_params[:id]
+    setup_branches
+    if !@promo
+      @promo = Promo.new
+      @promo.errors.add(:id, I18n.t('errors.id.is_invalid'))
+      @status = :bad_request
+    elsif @promo.errors.empty? && @promo.update_attributes(update_params)
+      @promo.branches = @branches
       render json: {
         success: true,
-        promo: promo
+        promo: @promo,
+        branches: @promo.branches
       },
       except: [:created_at, :updated_at]
+      return # Keep this to avoid double render
+    end
+    render json: {
+      success: false,
+      errors: @promo.errors
+    },
+    status: @status ? @status : :unprocessable_entity
+  end
+
+  def destroy
+    promo = Promo.find_by id: params[:id]
+    if !promo
+      promo = Branch.new
+      promo.errors.add(:id, I18n.t('errors.id.is_invalid'))
+      status = :bad_request
+    else
+      promo.destroy
+      render json: {
+        success: true,
+        message: {
+          promo: [I18n.t('messages.promo.deleted')]
+        }
+      }
       return # Keep this to avoid double render
     end
     render json: {
@@ -129,6 +140,26 @@ class PromosController < ApplicationController
     status: status ? status : :unprocessable_entity
   end
 
+  def get_by_store
+    store_id = params[:id]
+    filtered_promos = Set.new
+    Promo.all.each do | promo |
+      if promo.branches.any? && promo.branches.first.store_id == store_id.to_i
+        filtered_promos.add(promo)
+      end
+    end
+    render json: {
+      promos: filtered_promos
+    },
+    only: [:promos, :branches, :name, :id, :title, :description,
+           :expiration_date, :people_limit],
+    include: {
+      branches: {
+        only: [:id, :name]
+      }
+    }
+  end
+
   private
   def create_params
     params.require(:promo).permit(:title, :description, :terms,
@@ -146,5 +177,29 @@ class PromosController < ApplicationController
 
   def fetch_promos_params
     params.permit(promos: [:id])
+  end
+
+  def setup_branches
+    @branches = params.require(:promo).permit(:branches)
+    if @branches[:branches] && @branches[:branches].instance_of?(String)
+      branches_json = JSON.parse(@branches[:branches])
+    else
+      branches_json = create_params_branches[:branches]
+    end
+    if !branches_json
+      @promo.errors.add(:branches, I18n.t('errors.branch.not_selected'))
+      @status = :bad_request
+    end
+    arr = []
+    if @promo.errors.empty?
+      branches_json.each do | branch |
+        arr.push(branch["id"])
+      end
+    end
+    @branches = Branch.where(id: arr)
+    if @branches.count != arr.count
+      @promo.errors.add(:branches, I18n.t('errors.branch.some_are_invalid'))
+      @status = :unprocessable_entity
+    end
   end
 end
