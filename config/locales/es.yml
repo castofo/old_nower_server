@@ -129,6 +129,8 @@ es:
               confirmation: "Las contraseñas proporcionadas no coinciden"
             category_id:
               blank: "El id de la categoría no puede estar vacío"
+            nit:
+              blank: "El NIT no puede estar vacío"
         facebook_auth:
           attributes:
             token:

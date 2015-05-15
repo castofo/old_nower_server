@@ -115,13 +115,14 @@ class StoresController < ApplicationController
 
   private
   def create_params
-    params.require(:store).permit(:email, :name, :main_phone, :password,
+    params.require(:store).permit(:email, :name, :main_phone, :nit, :password,
                                   :password_confirmation, :category_id, :logo)
   end
 
   def update_params
     params.require(:store).permit(:id, :email, :name, :main_phone, :password,
-                                  :password_confirmation, :category_id, :logo)
+                                  :nit, :password_confirmation, :category_id,
+                                  :logo)
   end
 
   def login_params
