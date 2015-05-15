@@ -8,6 +8,8 @@ class Store < ActiveRecord::Base
   validates :password, presence: true, confirmation: true
   validates_presence_of :password_confirmation, if: :password_changed?
   validates :category_id, presence: true
+  validates :nit, presence: true
+
   has_many :branches, dependent: :delete_all
   belongs_to :category
 

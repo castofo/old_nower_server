@@ -151,6 +151,8 @@ en:
               confirmation: "Provided passwords don't match"
             category_id:
               blank: "Category id can't be blank"
+            nit:
+              blank: "NIT can't be blank"
         facebook_auth:
           attributes:
             token:
