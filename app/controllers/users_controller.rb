@@ -99,6 +99,7 @@ class UsersController < ApplicationController
         success: true,
         user: user
       },
+      methods: [:facebook_id, :facebook_token],
       status: status
     else
       render json: {

@@ -27,6 +27,16 @@ class User < ActiveRecord::Base
     (Redemption.where user_id: id, redeemed: false).count
   end
 
+  def facebook_token
+    return nil if !self.facebook_auth
+    self.facebook_auth.token
+  end
+
+  def facebook_id
+    return nil if !self.facebook_auth
+    self.facebook_auth.facebook_id
+  end
+
   private
   def encrypt_password
     if self.new_record?
