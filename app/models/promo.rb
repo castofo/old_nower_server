@@ -17,6 +17,7 @@ class Promo < ActiveRecord::Base
 
   #TODO Handle with timezones
   def has_expired
+    return true if !expiration_date
     PromosHelper.current_time > expiration_date
   end
 
