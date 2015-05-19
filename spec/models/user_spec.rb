@@ -120,18 +120,18 @@ describe User do
       end
     end
 
-    context "when password is blank" do
-      user = User.new
-      it "should not be a valid user" do
-        expect(user).not_to be_valid
-      end
-
-      it "should add the correct error message" do
-        user.valid?
-        expect(user.errors.messages[:password]).to include(
-          I18n.t('activerecord.errors.models.user.attributes.password.blank'))
-      end
-    end
+    #context "when password is blank" do
+    #  user = User.new
+    #  it "should not be a valid user" do
+    #    expect(user).not_to be_valid
+    #  end
+    #
+    #  it "should add the correct error message" do
+    #    user.valid?
+    #    expect(user.errors.messages[:password]).to include(
+    #      I18n.t('activerecord.errors.models.user.attributes.password.blank'))
+    #  end
+    #end
 
     context "when password has not confirmation" do
       user = User.new
