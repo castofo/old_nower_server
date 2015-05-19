@@ -16,12 +16,13 @@ describe Store do
     end
 
     context "when email already exists" do
-      first = Store.create name: "Test", email: "test1@gmail.com",
+      first = Store.create name: "Test", email: "test11@gmail.com",
                            main_phone: "1234567", password: "123",
-                           password_confirmation: "123", category_id: 1
+                           password_confirmation: "123", category_id: 1,
+                           nit: 1234567
 
       it "should add the correct error message" do
-        store = Store.create email: "test1@gmail.com"
+        store = Store.create email: "test11@gmail.com"
         expect(store.errors.messages[:email]).to include(
           I18n.t('activerecord.errors.models.store.attributes.email.taken'))
         store.destroy
@@ -100,7 +101,8 @@ describe Store do
     context "when changing password with confirmation unmatching" do
       first = Store.create name: "Test", email: "test2@gmail.com",
                            main_phone: "1234567", password: "123",
-                           password_confirmation: "123", category_id: 1
+                           password_confirmation: "123", category_id: 1,
+                           nit: 12345
 
       it "should add the correct error message" do
         store = Store.find_by email: "test2@gmail.com"
