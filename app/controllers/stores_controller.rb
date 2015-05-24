@@ -124,7 +124,7 @@ class StoresController < ApplicationController
       render json: {
         success: true,
         message: {
-          promo: [I18n.t('messages.store.deleted')]
+          store: [I18n.t('messages.store.deleted')]
         }
       }
       return # Keep this to avoid double render
