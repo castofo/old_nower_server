@@ -25,10 +25,8 @@ class Store < ActiveRecord::Base
 
   private
   def encrypt_password
-    if self.new_record?
-      self.salt = generate_salt
-      self.password = Store.encrypt self.password, self.salt
-    end
+    self.salt = generate_salt if self.new_record?
+    self.password = Store.encrypt self.password, self.salt
   end
 
   def self.encrypt(password, salt)
