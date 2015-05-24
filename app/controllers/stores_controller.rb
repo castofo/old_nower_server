@@ -1,5 +1,5 @@
 class StoresController < ApplicationController
-  before_filter :authenticate!, only: [:show]
+  #before_filter :authenticate!, only: [:show]
 
   def index
     render json: {
@@ -62,15 +62,21 @@ class StoresController < ApplicationController
   end
 
   def show
-    render json: {
-      store: current_person
-    },
-    include: {
-      category: {
-        only: [:id, :name]
-      }
-    },
-    except: [:salt, :created_at, :updated_at, :password]
+    store = Store.find_by id: params[:id]
+    if store
+      render json: {
+        store: store
+      },
+      except: [:password, :salt, :created_at, :updated_at]
+    else
+      store = Store.new
+      store.errors.add(:id, I18n.t('errors.id.is_invalid'))
+      render json: {
+        success: false,
+        errors: store.errors
+      },
+      status: :not_found
+    end
   end
 
   def login
