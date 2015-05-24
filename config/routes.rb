@@ -43,6 +43,7 @@ Rails.application.routes.draw do
 
   delete 'branches/:id', to: 'branches#destroy'
   delete 'promos/:id', to: 'promos#destroy'
+  delete 'stores/:id', to: 'stores#destroy'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

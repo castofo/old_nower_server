@@ -113,6 +113,29 @@ class StoresController < ApplicationController
     end
   end
 
+  def destroy
+    store = Store.find_by id: params[:id]
+    if !store
+      store = Store.new
+      store.errors.add(:id, I18n.t('errors.id.is_invalid'))
+      status = :bad_request
+    else
+      store.destroy
+      render json: {
+        success: true,
+        message: {
+          promo: [I18n.t('messages.store.deleted')]
+        }
+      }
+      return # Keep this to avoid double render
+    end
+    render json: {
+      success: false,
+      errors: store.errors
+    },
+    status: status ? status : :unprocessable_entity
+  end
+
   private
   def create_params
     params.require(:store).permit(:email, :name, :main_phone, :nit, :password,

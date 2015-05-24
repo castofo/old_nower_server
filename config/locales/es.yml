@@ -42,6 +42,8 @@ es:
       deleted: "La sucursal ha sido borrada satisfactoriamente"
     promo:
       deleted: "La promoción ha sido borrada satisfactoriamente"
+    store:
+      deleted: "La tienda ha sido borrada satisfactoriamente"
   # Default messages used by Active Record
   activerecord:
     errors:
