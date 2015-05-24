@@ -64,6 +64,8 @@ en:
       deleted: "The branch has been successfully deleted"
     promo:
       deleted: "The promo has been successfully deleted"
+    store:
+      deleted: "The store has been successfully deleted"
   # Default messages used by Active Record
   activerecord:
     errors:
