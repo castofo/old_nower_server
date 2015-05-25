@@ -75,7 +75,7 @@ class StoresController < ApplicationController
         success: false,
         errors: store.errors
       },
-      status: :not_found
+      status: :bad_request
     end
   end
 
