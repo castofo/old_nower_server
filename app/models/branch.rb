@@ -22,7 +22,7 @@ class Branch < ActiveRecord::Base
   def self.geolocation_query location_hash
     latitude = location_hash["latitude"]
     longitude = location_hash["longitude"]
-    range_in_km = 3
+    range_in_km = 2
     earth_radius = 6371
     "SELECT *
     FROM branches
