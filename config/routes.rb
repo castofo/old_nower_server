@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   post 'promo/now', to: 'redemptions#generate_code'
   post 'promos/details', to: 'promos#fetch_promos'
   post 'promos/locations', to: 'branches#get_by_locations_in_range'
+  post 'promos/locations/ids', to: 'branches#get_by_locations_in_range_ids'
 
   put 'branches', to: 'branches#update'
   patch 'branches', to: 'branches#update'
