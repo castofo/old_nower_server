@@ -98,21 +98,20 @@ class BranchesController < ApplicationController
   end
 
   def get_by_locations_in_range
-    query = Branch.geolocation_query get_by_locations_in_range_params
-    branches = Branch.find_by_sql(query)
-    branches = branches.as_json(except: [:created_at, :updated_at])
-    branches.each do |branch|
-      store = Branch.find(branch["id"]).store
-      branch["store_name"] = store.name
-      branch["store_logo"] = store.logo.url(:small)
-      branch["promos"] = Promo.find_by_sql(
-            Promo.promos_available_by_branch_query branch["id"])
-                    .as_json(except: [:created_at, :updated_at])
-    end
+    promo_fields = [:id, :picture, :title, :description, :terms, :expiration_date, :people_limit,
+                    :available_redemptions]
+    branches = retrieve_branches_by_locations_in_range(promo_fields)
     render json: {
       locations: branches
-    },
-    include: [:promos]
+    }
+  end
+
+  def get_by_locations_in_range_ids
+    promo_fields = [:id]
+    branches = retrieve_branches_by_locations_in_range(promo_fields)
+    render json: {
+      locations: branches
+    }
   end
 
   private
@@ -128,5 +127,20 @@ class BranchesController < ApplicationController
 
   def get_by_locations_in_range_params
     params.require(:user_location).permit(:latitude, :longitude)
+  end
+
+  def retrieve_branches_by_locations_in_range(promo_fields)
+    query = Branch.geolocation_query get_by_locations_in_range_params
+    branches = Branch.find_by_sql(query)
+    branches = branches.as_json(except: [:created_at, :updated_at])
+    branches.each do |branch|
+      store = Branch.find(branch["id"]).store
+      branch["store_name"] = store.name
+      branch["store_logo"] = store.logo.url(:small)
+      branch["promos"] = Promo.find_by_sql(
+            Promo.promos_available_by_branch_query branch["id"])
+                    .as_json(only: promo_fields)
+    end
+    return branches
   end
 end
